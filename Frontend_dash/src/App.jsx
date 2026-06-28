@@ -1,212 +1,37 @@
-/*import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
-}
-
-export default App*/
-
-
-/*function App() {
-  return (
-    <div>
-      <h1>Hello Falak! 🚀</h1>
-      <h1>My First React Application</h1>
-      <p>
-        Multi-Agent Hallucination Detector and Trust Score Engine
-      </p>
-    </div>
-  );
-}*/
-
-
-import "./App.css";
 import { useState } from "react";
 
+import "./App.css";
+import "./Components.css";
+
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import About from "./components/About";
+import Team from "./components/Team";
+import Signup from "./components/Signup";
+import Dashboard from "./components/Dashboard";
+import Login from "./components/Login";
+
 function App() {
-  const [showSignup, setShowSignup] = useState(false);
 
-  if (showSignup) {
-    return (
-      <div className="signup-page">
-  <button
-    className="back-btn"
-    onClick={() => setShowSignup(false)}
-  >
-    ⬅ Back
-  </button>
-
-  <div className="signup-card">
-    <h1>Sign Up</h1>
-
-    <div>
-      <label>Name</label>
-      <br />
-      <input
-        type="text"
-        placeholder="Enter your name"
-      />
-    </div>
-
-    <br />
-
-    <div>
-      <label>Phone Number</label>
-      <br />
-      <input
-        type="text"
-        placeholder="Enter phone number"
-      />
-    </div>
-
-    <br />
-
-    <button className="submit-btn">
-      Create Account
-    </button>
-  </div>
-</div>
-    );
-  }
+  const [page, setPage] = useState("home");
 
   return (
-    <div className="container">
-      <h1 className="title">
-        Multi-Agent Hallucination Detector
-      </h1>
+    <div>
 
-      <h2 className="subtitle">
-        Trust Score Engine for Reliable AI Responses
-      </h2>
+      <Navbar setPage={setPage} />
 
-      <p className="description">
-        Our multi-agent system verifies AI responses,
-        detects hallucinations, cross-checks facts,
-        and generates a trust score for reliable
-        decision-making.
-      </p>
+      {page === "home" && <Home setPage={setPage} />}
 
-      <button
-        className="signup-btn"
-        onClick={() => setShowSignup(true)}
-      >
-        Sign Up
-      </button>
+      {page === "about" && <About />}
+
+      {page === "team" && <Team />}
+
+      {page === "signup" && <Signup setPage={setPage} />}
+
+      {page === "login" && <Login setPage={setPage} />}
+      
+      {page === "dashboard" && <Dashboard />}
+
     </div>
   );
 }

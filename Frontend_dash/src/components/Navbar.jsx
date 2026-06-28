@@ -2,9 +2,13 @@ function Navbar({ setPage }) {
   return (
     <nav className="navbar">
 
+      {/* Project Logo */}
+
       <div className="logo">
-        Trust Score Engine
+        Multi-Agent Hallucination Detector
       </div>
+
+      {/* Navigation */}
 
       <div className="nav-links">
 
@@ -20,14 +24,31 @@ function Navbar({ setPage }) {
           Team
         </button>
 
+        <button onClick={() => setPage("dashboard")}>
+          Dashboard
+        </button>
+
       </div>
 
-      <button
-        className="signup-nav-btn"
-        onClick={() => setPage("signup")}
-      >
-        Sign Up
-      </button>
+     {/* Right Side */}
+
+<div className="nav-auth">
+
+  <button
+    className="login-nav-btn"
+    onClick={() => setPage("login")}
+  >
+    Login
+  </button>
+
+  <button
+    className="signup-nav-btn"
+    onClick={() => setPage("signup")}
+  >
+    Sign Up
+  </button>
+
+</div>
 
     </nav>
   );
