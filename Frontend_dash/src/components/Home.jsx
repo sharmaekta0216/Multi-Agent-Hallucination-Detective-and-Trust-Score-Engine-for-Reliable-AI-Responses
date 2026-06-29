@@ -1,3 +1,5 @@
+import "../styles/Home.css";
+
 function Home({ setPage }) {
   return (
     <div className="home">

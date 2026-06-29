@@ -1,3 +1,6 @@
+import "../styles/Team.css";
+
+
 function Team() {
   const members = [
     {

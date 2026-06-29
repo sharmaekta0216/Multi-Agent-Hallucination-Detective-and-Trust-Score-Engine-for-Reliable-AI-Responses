@@ -1,3 +1,5 @@
+import "../styles/Signup.css";
+
 function Signup({ setPage }) {
   return (
     <div className="signup-page">
