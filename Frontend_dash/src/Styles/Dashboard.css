@@ -1,0 +1,111 @@
+/* ================= DASHBOARD ================= */
+
+.dashboard{
+
+    padding:40px;
+
+}
+
+.dashboard h1{
+
+    color:#2563eb;
+
+    text-align:center;
+
+}
+
+.dashboard-subtitle{
+
+    text-align:center;
+
+    color:#666;
+
+    margin-bottom:40px;
+
+}
+
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:30px;
+
+}
+
+.question-card{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.question-card textarea{
+
+    width:100%;
+
+    height:220px;
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    border:1px solid #ccc;
+
+    resize:none;
+
+    font-size:16px;
+
+    box-sizing:border-box;
+
+}
+
+.summary-card{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.summary-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin:18px 0;
+
+    font-size:17px;
+
+}
+
+.status{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    background:#eef4ff;
+
+    color:#2563eb;
+
+    font-weight:bold;
+
+}

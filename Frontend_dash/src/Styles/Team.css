@@ -1,0 +1,125 @@
+/* ================= TEAM PAGE ================= */
+
+.team-container{
+
+    padding:50px;
+
+    text-align:center;
+
+}
+
+.team-container h1{
+
+    color:#2563eb;
+
+    font-size:42px;
+
+}
+
+.team-subtitle{
+
+    color:#666;
+
+    margin-bottom:50px;
+
+    font-size:18px;
+
+}
+
+.team-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:35px;
+
+}
+
+.team-card{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.team-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.avatar{
+
+    width:80px;
+
+    height:80px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:32px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-weight:bold;
+
+}
+
+.team-card h2{
+
+    margin-top:20px;
+
+    color:#2563eb;
+
+}
+
+.team-card h4{
+
+    color:#444;
+
+    margin-bottom:5px;
+
+}
+
+.team-card p{
+
+    color:#777;
+
+}
+
+.team-card hr{
+
+    margin:20px 0;
+
+}
+
+.team-card ul{
+
+    text-align:left;
+
+    line-height:2;
+
+    color:#555;
+
+    list-style:none;
+
+    padding-left:0;
+
+}

@@ -1,3 +1,5 @@
+import "../styles/Login.css";
+
 function Login({ setPage }) {
   return (
     <div className="login-page">

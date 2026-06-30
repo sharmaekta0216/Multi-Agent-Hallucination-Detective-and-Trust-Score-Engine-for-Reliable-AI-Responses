@@ -1,0 +1,93 @@
+/* ================= ABOUT PAGE ================= */
+
+.about-container{
+    padding:50px;
+}
+
+.about-header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.about-header h1{
+    color:#2563eb;
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+.about-header p{
+    max-width:900px;
+    margin:auto;
+    line-height:1.8;
+    color:#555;
+    font-size:18px;
+}
+
+.about-card{
+    background:white;
+    padding:30px;
+    margin-top:35px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+.about-card h2{
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+.about-card p{
+    color:#555;
+    line-height:1.8;
+}
+
+.problem-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.problem-box{
+    background:#f8faff;
+    padding:20px;
+    border-left:5px solid #2563eb;
+    border-radius:8px;
+}
+
+.problem-box h3{
+    color:#2563eb;
+}
+
+.workflow{
+    text-align:center;
+}
+
+.workflow-item{
+    display:inline-block;
+    background:#eef4ff;
+    padding:12px 25px;
+    border-radius:8px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.workflow-arrow{
+    font-size:24px;
+    margin:8px 0;
+    color:#2563eb;
+}
+
+.tech-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.tech-card{
+    background:#eef4ff;
+    padding:18px;
+    text-align:center;
+    border-radius:10px;
+    font-weight:bold;
+    color:#2563eb;
+}
