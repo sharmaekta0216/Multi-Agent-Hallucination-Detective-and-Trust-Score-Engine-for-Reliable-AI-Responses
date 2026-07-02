@@ -46,6 +46,7 @@
 #             "hallucination": hallucination,
 #             "trust": trust
 #         }
+from gemini_service import get_gemini_response
 from agents.response_agent import ResponseAgent
 from agents.fact_checker import FactAgent
 from agents.logic_checker import LogicAgent

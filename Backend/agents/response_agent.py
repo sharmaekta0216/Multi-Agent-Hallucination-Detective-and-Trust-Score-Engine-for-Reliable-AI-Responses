@@ -1,15 +1,24 @@
 
+from gemini_service import get_gemini_response
+
+
 class ResponseAgent:
-    def __init__(self, llm=None):
-        self.llm = llm
 
-    def generate_response(self, query: str):
-        if self.llm:
-            response = self.llm.invoke(query)
-        else:
-            response = f"Demo AI Response: {query}"
+    def __init__(self):
+        print("Response Agent Initialized")
 
-        return {
-            "query": query,
-            "response": response
-        }
+    def generate_response(self, query):
+        try:
+            ai_response = get_gemini_response(query)
+
+            return {
+                "query": query,
+                "response": ai_response
+            }
+
+        except Exception as e:
+            return {
+                "query": query,
+                "response": "Unable to generate response.",
+                "error": str(e)
+            }
