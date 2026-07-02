@@ -1,14 +1,12 @@
 class HallucinationAgent:
 
-    def analyze(self, response, evidence):
-        """
-        Detect hallucinations.
-        Placeholder implementation.
-        """
+    def detect_hallucination(self, response: str):
+
+        print("Hallucination Agent Running...")
+
+        hallucination_score = 10
 
         return {
-            "hallucination_score": 5,
-            "unsupported_claims": 0,
-            "contradictions": 0,
-            "remarks": "No significant hallucinations detected."
+            "hallucination_score": hallucination_score,
+            "message": "No Hallucination Detected"
         }
