@@ -47,46 +47,40 @@
 #             "trust": trust
 #         }
 from agents.response_agent import ResponseAgent
+from agents.fact_checker import FactAgent
+from agents.logic_checker import LogicAgent
 from agents.evidence_agent import EvidenceAgent
 from agents.hallucination_agent import HallucinationAgent
-from agents.trust_agent import TrustAgent
+from score.trust_score import TrustAgent
 
 
 def run_workflow(query):
 
     response_agent = ResponseAgent()
-
+    fact_checker = FactAgent()
+    logic_checker = LogicAgent()
     evidence_agent = EvidenceAgent()
-
     hallucination_agent = HallucinationAgent()
-
     trust_agent = TrustAgent()
 
-    # Generate AI Response
     response = response_agent.generate_response(query)
 
-    # Check Evidence
-    evidence = evidence_agent.check_evidence(
-        response["response"]
-    )
+    fact = fact_checker.check_fact(response["response"])
+    logic = logic_checker.check_logic(response["response"])
+    evidence = evidence_agent.check_evidence(response["response"])
+    hallucination = hallucination_agent.detect_hallucination(response["response"])
 
-    # Detect Hallucination
-    hallucination = hallucination_agent.detect_hallucination(
-        response["response"]
-    )
-
-    # Demo Fact Score
-    fact_score = 90
-
-    # Calculate Trust Score
     trust = trust_agent.calculate_score(
-        fact_score=fact_score,
-        evidence_score=evidence["evidence_score"],
-        hallucination_score=hallucination["hallucination_score"]
+        fact["fact_score"],
+        logic["logic_score"],
+        evidence["evidence_score"],
+        hallucination["hallucination_score"]
     )
 
     return {
         "response": response,
+        "fact": fact,
+        "logic": logic,
         "evidence": evidence,
         "hallucination": hallucination,
         "trust": trust

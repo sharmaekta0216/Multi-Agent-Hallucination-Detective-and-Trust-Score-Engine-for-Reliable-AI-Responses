@@ -1,5 +1,5 @@
 from agents.workflow import run_workflow
-
+from score.trust_score import TrustAgent
 query = input("Enter your query: ")
 
 result = run_workflow(query)
@@ -11,6 +11,12 @@ print(result["response"]["query"])
 
 print("\nAI Response:")
 print(result["response"]["response"])
+
+print("\nFact Score:")
+print(result["fact"]["fact_score"])
+
+print("\nLogic Score:")
+print(result["logic"]["logic_score"])
 
 print("\nEvidence Score:")
 print(result["evidence"]["evidence_score"])
