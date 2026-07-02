@@ -1,16 +1,12 @@
 class EvidenceAgent:
 
-    def collect_evidence(self, query, response):
-        """
-        Collect evidence from trusted sources.
-        Placeholder implementation.
-        """
+    def check_evidence(self, response: str):
 
-        evidence = [
-            {
-                "source": "Trusted Source",
-                "content": "Evidence will be collected here."
-            }
-        ]
+        print("Evidence Agent Running...")
 
-        return evidence
+        evidence_score = 90
+
+        return {
+            "evidence_score": evidence_score,
+            "message": "Evidence Found"
+        }

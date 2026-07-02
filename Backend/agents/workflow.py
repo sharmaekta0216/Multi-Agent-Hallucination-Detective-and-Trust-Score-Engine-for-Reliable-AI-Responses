@@ -1,48 +1,93 @@
 # agents/workflow.py
 
+# from agents.response_agent import ResponseAgent
+# from agents.evidence_agent import EvidenceAgent
+# from agents.hallucination_agent import HallucinationAgent
+# from agents.trust_agent import TrustAgent
+
+
+# class MultiAgentWorkflow:
+
+#     def __init__(self, llm):
+
+#         self.response_agent = ResponseAgent(llm)
+#         self.evidence_agent = EvidenceAgent()
+#         self.hallucination_agent = HallucinationAgent()
+#         self.trust_agent = TrustAgent()
+
+#     def execute(self, query):
+
+#         # Step 1
+#         response = self.response_agent.generate_response(query)
+
+#         # Step 2
+#         evidence = self.evidence_agent.collect_evidence(
+#             query,
+#             response["response"]
+#         )
+
+#         # Step 3
+#         hallucination = self.hallucination_agent.analyze(
+#             response["response"],
+#             evidence
+#         )
+
+#         # Step 4
+#         trust = self.trust_agent.calculate_score(
+#             fact_score=90,
+#             evidence_score=90,
+#             hallucination_score=hallucination["hallucination_score"]
+#         )
+
+#         return {
+#             "query": query,
+#             "response": response["response"],
+#             "evidence": evidence,
+#             "hallucination": hallucination,
+#             "trust": trust
+#         }
 from agents.response_agent import ResponseAgent
 from agents.evidence_agent import EvidenceAgent
 from agents.hallucination_agent import HallucinationAgent
 from agents.trust_agent import TrustAgent
 
 
-class MultiAgentWorkflow:
+def run_workflow(query):
 
-    def __init__(self, llm):
+    response_agent = ResponseAgent()
 
-        self.response_agent = ResponseAgent(llm)
-        self.evidence_agent = EvidenceAgent()
-        self.hallucination_agent = HallucinationAgent()
-        self.trust_agent = TrustAgent()
+    evidence_agent = EvidenceAgent()
 
-    def execute(self, query):
+    hallucination_agent = HallucinationAgent()
 
-        # Step 1
-        response = self.response_agent.generate_response(query)
+    trust_agent = TrustAgent()
 
-        # Step 2
-        evidence = self.evidence_agent.collect_evidence(
-            query,
-            response["response"]
-        )
+    # Generate AI Response
+    response = response_agent.generate_response(query)
 
-        # Step 3
-        hallucination = self.hallucination_agent.analyze(
-            response["response"],
-            evidence
-        )
+    # Check Evidence
+    evidence = evidence_agent.check_evidence(
+        response["response"]
+    )
 
-        # Step 4
-        trust = self.trust_agent.calculate_score(
-            fact_score=90,
-            evidence_score=90,
-            hallucination_score=hallucination["hallucination_score"]
-        )
+    # Detect Hallucination
+    hallucination = hallucination_agent.detect_hallucination(
+        response["response"]
+    )
 
-        return {
-            "query": query,
-            "response": response["response"],
-            "evidence": evidence,
-            "hallucination": hallucination,
-            "trust": trust
-        }
+    # Demo Fact Score
+    fact_score = 90
+
+    # Calculate Trust Score
+    trust = trust_agent.calculate_score(
+        fact_score=fact_score,
+        evidence_score=evidence["evidence_score"],
+        hallucination_score=hallucination["hallucination_score"]
+    )
+
+    return {
+        "response": response,
+        "evidence": evidence,
+        "hallucination": hallucination,
+        "trust": trust
+    }
