@@ -82,7 +82,7 @@ def run_workflow(query):
         
     "success": True,
     "question": query,
-    "answer": response["response"],
+    "ai_response": response["response"],
 
     "fact_score": fact["fact_score"],
     "logic_score": logic["logic_score"],

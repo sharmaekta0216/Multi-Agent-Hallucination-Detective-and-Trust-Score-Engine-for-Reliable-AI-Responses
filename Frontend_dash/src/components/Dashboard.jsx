@@ -601,150 +601,120 @@
 
 
 
-import React, { useState } from "react";
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  LineChart,
-  Line,
-} from "recharts";
-
+import { useState } from "react";
+import "../Styles/Dashboard.css";
 import CircularScore from "./CircularScore";
 
 function Dashboard() {
-  const [active, setActive] = useState("home");
+  const [question, setQuestion] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
 
-  const stats = [
-    { title: "Users", value: 1200 },
-    { title: "Revenue", value: "$8.5K" },
-    { title: "Orders", value: 320 },
-    { title: "Feedback", value: "98%" },
-  ];
+  const analyzeResponse = async () => {
+    if (!question.trim()) {
+      alert("Please enter a question!");
+      return;
+    }
 
-  const chartData = [
-    { name: "Jan", value: 400 },
-    { name: "Feb", value: 800 },
-    { name: "Mar", value: 600 },
-    { name: "Apr", value: 1200 },
-  ];
+    setLoading(true);
 
-  const ads = [
-    { title: "🔥 Upgrade Pro Plan", desc: "Get advanced analytics & AI insights" },
-    { title: "⚡ Fast API Hosting", desc: "Deploy backend in seconds" },
-    { title: "📊 Premium Dashboard UI", desc: "Unlock pro templates" },
-  ];
+    try {
+      const response = await fetch("http://127.0.0.1:8000/analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          question: question,
+        }),
+      });
+
+      const data = await response.json();
+      setResult(data);
+    } catch (error) {
+      console.log(error);
+      alert("Backend not connected!");
+    }
+
+    setLoading(false);
+  };
 
   return (
     <div className="dashboard">
 
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <h2>MyApp</h2>
+      <div className="dashboard-header">
+        <h1>🤖 Multi-Agent Hallucination Detector</h1>
+        <p>Trust Score Engine for Reliable AI Responses</p>
+      </div>
 
-        <ul>
-          <li onClick={() => setActive("home")}>Home</li>
-          <li onClick={() => setActive("charts")}>Charts</li>
-          <li onClick={() => setActive("ads")}>Ads</li>
-          <li onClick={() => setActive("history")}>History</li>
-        </ul>
-      </aside>
+      <div className="question-card">
 
-      {/* Main */}
-      <main className="main">
+        <textarea
+          placeholder="Ask any question..."
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+        />
 
-        {/* Navbar */}
-        <div className="navbar">
-          <h1>Dashboard</h1>
-          <button className="login-btn">Login</button>
-        </div>
+        <button onClick={analyzeResponse}>
+          {loading ? "Analyzing..." : "Analyze"}
+        </button>
 
-        {/* HOME */}
-        {active === "home" && (
-          <>
-            <div className="top-section">
-              <CircularScore title="Trust Score" value={82} color="#2563eb" />
-            </div>
+      </div>
 
-            <div className="stats">
-              {stats.map((s, i) => (
-                <div className="card" key={i}>
-                  <h3>{s.title}</h3>
-                  <h1>{s.value}</h1>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
+      {result && (
 
-        {/* CHARTS */}
-        {active === "charts" && (
-          <div className="charts">
+        <>
 
-            <div className="chart-box">
-              <h3>Revenue Trend</h3>
+          <div className="score-section">
 
-              <ResponsiveContainer width="100%" height={250}>
-                <LineChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line dataKey="value" stroke="#2563eb" />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+            <CircularScore
+              title="Trust Score"
+              value={result.trust_score}
+            />
 
-            <div className="chart-box">
-              <h3>Users Growth</h3>
+            <div className="score-grid">
 
-              <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={chartData}>
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="value" fill="#22c55e" />
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="card">
+                <h3>Fact Score</h3>
+                <h2>{result.fact_score}</h2>
+              </div>
+
+              <div className="card">
+                <h3>Logic Score</h3>
+                <h2>{result.logic_score}</h2>
+              </div>
+
+              <div className="card">
+                <h3>Evidence Score</h3>
+                <h2>{result.evidence_score}</h2>
+              </div>
+
+              <div className="card">
+                <h3>Hallucination</h3>
+                <h2>{result.hallucination_score}</h2>
+              </div>
+
             </div>
 
           </div>
-        )}
 
-        {/* ADS SECTION */}
-        {active === "ads" && (
-          <div className="ads-section">
-            <h2>Sponsored Ads</h2>
+          <div className="response-card">
 
-            <div className="ads-grid">
-              {ads.map((ad, i) => (
-                <div className="ad-card" key={i}>
-                  <h3>{ad.title}</h3>
-                  <p>{ad.desc}</p>
-                  <button>Learn More</button>
-                </div>
-              ))}
-            </div>
+            <h2>AI Response</h2>
+
+            <p>{result.ai_response}</p>
+
+            <h3>
+              Trust Level :
+              <span> {result.trust_level}</span>
+            </h3>
+
           </div>
-        )}
 
-        {/* HISTORY */}
-        {active === "history" && (
-          <div className="history">
-            <h2>Recent Activity</h2>
-            <ul>
-              <li>User analyzed query #1</li>
-              <li>AI response generated</li>
-              <li>Trust score calculated</li>
-            </ul>
-          </div>
-        )}
+        </>
 
-      </main>
+      )}
+
     </div>
   );
 }
