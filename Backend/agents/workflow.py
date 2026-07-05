@@ -79,10 +79,16 @@ def run_workflow(query):
     )
 
     return {
-        "response": response,
-        "fact": fact,
-        "logic": logic,
-        "evidence": evidence,
-        "hallucination": hallucination,
-        "trust": trust
-    }
+        
+    "success": True,
+    "question": query,
+    "answer": response["response"],
+
+    "fact_score": fact["fact_score"],
+    "logic_score": logic["logic_score"],
+    "evidence_score": evidence["evidence_score"],
+    "hallucination_score": hallucination["hallucination_score"],
+
+    "trust_score": trust["trust_score"],
+    "trust_level": trust["trust_level"]
+}

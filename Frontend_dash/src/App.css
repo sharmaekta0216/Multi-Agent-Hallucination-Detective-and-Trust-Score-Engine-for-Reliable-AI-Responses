@@ -101,7 +101,7 @@
    Global Styles
    =========================== */
 
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -115,4 +115,51 @@ body {
 
 #root {
   min-height: 100vh;
+} */
+ *{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#eef4ff;
+}
+
+.app{
+  min-height:100vh;
+  background:linear-gradient(135deg,#eef4ff,#dbeafe);
+  transition:.4s;
+}
+
+.dark{
+  background:#0f172a;
+  color:white;
+}
+
+.dark textarea,
+.dark input{
+  background:#1e293b;
+  color:white;
+  border:1px solid #475569;
+}
+
+.dark .card,
+.dark .response-card,
+.dark .navbar,
+.dark .footer{
+  background:#1e293b;
+  color:white;
+}
+
+.dark button{
+  background:#2563eb;
+}
+
+.dark h1,
+.dark h2,
+.dark h3,
+.dark p{
+  color:white;
 }

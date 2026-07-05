@@ -1,56 +1,138 @@
-import "../styles/Navbar.css";
+// import "../styles/Navbar.css";
 
-function Navbar({ setPage }) {
+// function Navbar({ setPage }) {
+//   return (
+//     <nav className="navbar">
+
+//       {/* Project Logo */}
+
+//       <div className="logo">
+//         Multi-Agent Hallucination Detector
+//       </div>
+
+//       {/* Navigation */}
+
+//       <div className="nav-links">
+
+//         <button onClick={() => setPage("home")}>
+//           Home
+//         </button>
+
+//         <button onClick={() => setPage("about")}>
+//           About
+//         </button>
+
+//         <button onClick={() => setPage("team")}>
+//           Team
+//         </button>
+
+//         <button onClick={() => setPage("dashboard")}>
+//           Dashboard
+//         </button>
+
+//       </div>
+
+//      {/* Right Side */}
+
+// <div className="nav-auth">
+
+//   <button
+//     className="login-nav-btn"
+//     onClick={() => setPage("login")}
+//   >
+//     Login
+//   </button>
+
+//   <button
+//     className="signup-nav-btn"
+//     onClick={() => setPage("signup")}
+//   >
+//     Sign Up
+//   </button>
+
+// </div>
+
+//     </nav>
+//   );
+// }
+
+// export default Navbar;
+// import "../Styles/Navbar.css";
+
+// function Navbar() {
+//   return (
+//     <nav className="navbar">
+//       <div className="logo">
+//         🤖 Trust Score Engine
+//       </div>
+
+//       <ul className="nav-links">
+//         <li><a href="/">Home</a></li>
+//         <li><a href="/">Dashboard</a></li>
+//         <li><a href="/">About</a></li>
+//         <li><a href="/">Team</a></li>
+//       </ul>
+
+//       <button className="login-btn">
+//         Login
+//       </button>
+//     </nav>
+//   );
+// }
+
+// export default Navbar;
+import React from "react";
+import { Link } from "react-router-dom";
+import "../Styles/Navbar.css";
+
+function Navbar() {
   return (
     <nav className="navbar">
 
-      {/* Project Logo */}
-
+      {/* Logo */}
       <div className="logo">
-        Multi-Agent Hallucination Detector
+        🤖 Trust Score Engine
       </div>
 
-      {/* Navigation */}
+      {/* Links */}
+      <ul className="nav-links">
 
-      <div className="nav-links">
+        <li>
+          <Link to="/">Home</Link>
+        </li>
 
-        <button onClick={() => setPage("home")}>
-          Home
-        </button>
+        <li>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
 
-        <button onClick={() => setPage("about")}>
-          About
-        </button>
+        <li>
+          <Link to="/charts">Charts</Link>
+        </li>
 
-        <button onClick={() => setPage("team")}>
-          Team
-        </button>
+        <li>
+          <Link to="/team">Team</Link>
+        </li>
 
-        <button onClick={() => setPage("dashboard")}>
-          Dashboard
-        </button>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
 
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+
+        <li>
+          <Link to="/signup">Signup</Link>
+        </li>
+
+      </ul>
+
+      {/* Right Button */}
+      <div className="nav-right">
+        <Link to="/login">
+          <button className="login-btn">Login</button>
+        </Link>
       </div>
-
-     {/* Right Side */}
-
-<div className="nav-auth">
-
-  <button
-    className="login-nav-btn"
-    onClick={() => setPage("login")}
-  >
-    Login
-  </button>
-
-  <button
-    className="signup-nav-btn"
-    onClick={() => setPage("signup")}
-  >
-    Sign Up
-  </button>
-
-</div>
 
     </nav>
   );

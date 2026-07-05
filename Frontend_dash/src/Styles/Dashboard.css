@@ -1,6 +1,6 @@
 /* ================= DASHBOARD ================= */
 
-.dashboard{
+/* .dashboard{
 
     padding:40px;
 
@@ -108,4 +108,269 @@
 
     font-weight:bold;
 
+} */
+/* body{
+    margin:0;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#eef3f8;
+}
+
+.dashboard-container{
+    max-width:1100px;
+    margin:40px auto;
+    padding:30px;
+}
+
+.dashboard-container h1{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:30px;
+}
+
+textarea{
+    width:100%;
+    padding:15px;
+    font-size:16px;
+    border:1px solid #ccc;
+    border-radius:12px;
+    resize:none;
+    outline:none;
+    box-sizing:border-box;
+}
+
+textarea:focus{
+    border-color:#2563eb;
+}
+
+button{
+    margin-top:20px;
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+button:disabled{
+    background:gray;
+    cursor:not-allowed;
+}
+
+.error-box{
+    margin-top:20px;
+    background:#fee2e2;
+    color:#b91c1c;
+    padding:15px;
+    border-radius:10px;
+}
+
+.response-card{
+    background:white;
+    margin-top:35px;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.12);
+}
+
+.response-card h2{
+    color:#2563eb;
+}
+
+.response-card p{
+    line-height:1.8;
+    font-size:17px;
+}
+
+.score-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-top:30px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,.12);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+}
+
+.card h3{
+    margin-bottom:15px;
+    color:#555;
+}
+
+.card h1{
+    color:#2563eb;
+    font-size:36px;
+} */
+ /* Google Font */
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #eef4ff;
+}
+
+/* Layout */
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: #111827;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+  color: #3b82f6;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.sidebar li:hover {
+  background: #1f2937;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.login-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+}
+
+/* Cards */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card h1 {
+  color: #2563eb;
+}
+
+/* Charts */
+.charts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.chart-box {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+/* Ads */
+.ads-section h2 {
+  margin-bottom: 15px;
+}
+
+.ads-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.ad-card {
+  background: linear-gradient(135deg, #2563eb, #60a5fa);
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.ad-card button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+/* History */
+.history {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .charts {
+    grid-template-columns: 1fr;
+  }
+
+  .ads-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    width: 160px;
+  }
 }

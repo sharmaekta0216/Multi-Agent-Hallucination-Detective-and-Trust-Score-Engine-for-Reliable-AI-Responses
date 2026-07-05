@@ -46,7 +46,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",  # Vite React
-        "http://localhost:3000"   # Create React App
+        "http://127.0.0.1:5173"   # Create React App
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -55,7 +55,7 @@ app.add_middleware(
 
 
 class QueryRequest(BaseModel):
-    query: str
+    question: str
 
 
 @app.get("/")
@@ -68,7 +68,7 @@ def home():
 @app.post("/analyze")
 def analyze(request: QueryRequest):
     try:
-        result = run_workflow(request.query)
+        result = run_workflow(request.question)
         return result
 
     except Exception as e:
