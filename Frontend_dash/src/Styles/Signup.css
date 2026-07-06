@@ -110,15 +110,4 @@
 
 }
 
-.back-btn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  background-color: #2563eb;
-  color: white;
-  cursor: pointer;
-}
+

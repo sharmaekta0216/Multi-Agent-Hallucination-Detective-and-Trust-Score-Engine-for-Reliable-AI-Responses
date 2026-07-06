@@ -4,15 +4,6 @@ function Signup({ setPage }) {
   return (
     <div className="signup-page">
 
-      {/* Back Button */}
-
-      <button
-        className="back-btn"
-        onClick={() => setPage("home")}
-      >
-        ← Back
-      </button>
-
       {/* Signup Card */}
 
       <div className="signup-card">

@@ -4,13 +4,6 @@ function Login({ setPage }) {
   return (
     <div className="login-page">
 
-      <button
-        className="back-btn"
-        onClick={() => setPage("home")}
-      >
-        ← Back
-      </button>
-
       <div className="login-card">
 
         <h1>Sign In</h1>
