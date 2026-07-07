@@ -190,6 +190,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Charts from "./components/Charts";
 import About from "./components/About";
+import Settings from "./components/Settings";
 
 import "./Styles/App.css";
 
@@ -206,6 +207,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>
   );

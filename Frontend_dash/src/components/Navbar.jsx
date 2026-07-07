@@ -122,17 +122,14 @@ function Navbar() {
         </li>
 
         <li>
-          <Link to="/signup">Signup</Link>
+          <Link to="/signup">Sign Up</Link>
+        </li>
+
+        <li>
+          <Link to="/settings">Settings</Link>
         </li>
 
       </ul>
-
-      {/* Right Button */}
-      <div className="nav-right">
-        <Link to="/login">
-          <button className="login-btn">Login</button>
-        </Link>
-      </div>
 
     </nav>
   );

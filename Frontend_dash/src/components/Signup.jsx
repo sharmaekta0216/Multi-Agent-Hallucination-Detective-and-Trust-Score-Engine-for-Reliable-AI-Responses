@@ -32,14 +32,6 @@ function Signup({ setPage }) {
         </div>
 
         <div className="input-group">
-          <label>Phone Number</label>
-          <input
-            type="text"
-            placeholder="Enter your phone number"
-          />
-        </div>
-
-        <div className="input-group">
           <label>Password</label>
           <input
             type="password"
