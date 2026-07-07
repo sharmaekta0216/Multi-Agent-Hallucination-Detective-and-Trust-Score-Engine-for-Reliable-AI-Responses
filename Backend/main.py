@@ -35,11 +35,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from agents.workflow import run_workflow
+from api.auth import router as auth_router
+from services.database_service import (
+    save_query,
+    save_response,
+    save_trust_score
+)
 
 app = FastAPI(
     title="Multi-Agent Hallucination Detection API",
     version="1.0.0"
 )
+app.include_router(auth_router)
 
 # Allow React frontend to connect
 app.add_middleware(
@@ -74,7 +81,35 @@ def home():
 @app.post("/analyze")
 def analyze(request: QueryRequest):
     try:
+        # Run AI workflow
         result = run_workflow(request.question)
+
+        # Temporary user (until login integration)
+        user_id = 1
+
+        # Save query
+        query_id = save_query(
+            user_id,
+            request.question
+        )
+
+        # Save AI response
+        response_id = save_response(
+            query_id,
+            result["ai_response"]
+        )
+
+        # Save trust score
+        save_trust_score(
+            response_id,
+            result["fact_score"],
+            result["logic_score"],
+            result["evidence_score"],
+            result["hallucination_score"],
+            result["trust_score"],
+            result["trust_level"]
+        )
+
         return result
 
     except Exception as e:
