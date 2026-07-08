@@ -202,3 +202,16 @@
     gap: 15px;
   }
 }
+
+.settings-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  transition: 0.3s;
+}
+
+.settings-link:hover {
+  color: #2563eb;
+  transform: rotate(30deg);
+}

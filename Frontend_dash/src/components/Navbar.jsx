@@ -84,6 +84,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../Styles/Navbar.css";
+import { FiSettings } from "react-icons/fi";
 
 function Navbar() {
   return (
@@ -126,7 +127,9 @@ function Navbar() {
         </li>
 
         <li>
-          <Link to="/settings">Settings</Link>
+          <Link to="/settings" className="settings-link">
+          <FiSettings size={22} />
+          </Link>
         </li>
 
       </ul>
