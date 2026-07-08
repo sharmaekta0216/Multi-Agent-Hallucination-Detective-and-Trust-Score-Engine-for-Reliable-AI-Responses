@@ -98,9 +98,14 @@ from agents.logic_checker import LogicAgent
 from agents.evidence_agent import EvidenceAgent
 from agents.hallucination_agent import HallucinationAgent
 from score.trust_score import TrustAgent
+from services.database_service import (
+    save_query,
+    save_response,
+    save_trust_score
+)
 
 
-def run_workflow(query):
+def run_workflow(user_id, query):
 
     # Initialize all agents
     response_agent = ResponseAgent()
@@ -114,6 +119,10 @@ def run_workflow(query):
     response = response_agent.generate_response(query)
 
     ai_response = response["response"]
+    query_id = save_query(
+    user_id=user_id,
+    query_text=query
+)
 
     # Step 2: Run all evaluation agents
     fact = fact_checker.check_fact(ai_response)
@@ -128,6 +137,21 @@ def run_workflow(query):
         evidence["evidence_score"],
         hallucination["hallucination_score"]
     )
+    response_id = save_response(
+    query_id=query_id,
+    response_text=ai_response,
+    model_name="Gemini 2.5 Flash",
+    response_time_ms=None
+)
+    save_trust_score(
+    response_id=response_id,
+    fact_score=fact["fact_score"],
+    logic_score=logic["logic_score"],
+    evidence_score=evidence["evidence_score"],
+    hallucination_score=hallucination["hallucination_score"],
+    final_trust_score=trust["trust_score"],
+    trust_level=trust["trust_level"]
+)
 
     # Step 4: Return complete response
     return {

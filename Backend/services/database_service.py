@@ -145,3 +145,36 @@ def save_trust_score(
 
     cursor.close()
     conn.close()
+
+    # -----------------------------
+# HISTORY
+# -----------------------------
+
+def get_user_history(user_id):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    sql = """
+    SELECT
+        q.query_id,
+        q.query_text,
+        q.created_at,
+        r.response_text,
+        t.final_trust_score,
+        t.trust_level
+    FROM queries q
+    JOIN ai_responses r
+        ON q.query_id = r.query_id
+    JOIN trust_scores t
+        ON r.response_id = t.response_id
+    WHERE q.user_id = %s
+    ORDER BY q.created_at DESC
+    """
+
+    cursor.execute(sql, (user_id,))
+    history = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return history
