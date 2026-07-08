@@ -30,29 +30,123 @@
 # print("\nTrust Level:")
 # print(result["trust"]["trust_level"])
 
+# from fastapi import FastAPI
+# from fastapi.middleware.cors import CORSMiddleware
+# from pydantic import BaseModel
+
+# from agents.workflow import run_workflow
+# from api.auth import router as auth_router
+# from services.database_service import (
+#     save_query,
+#     save_response,
+#     save_trust_score
+# )
+
+# app = FastAPI(
+#     title="Multi-Agent Hallucination Detection API",
+#     version="1.0.0"
+# )
+# app.include_router(auth_router)
+
+# # Allow React frontend to connect
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=[
+#         "http://localhost:5173", 
+#         "http://localhost:5174",  # Vite React
+#         "http://localhost:5175",  # Vite React
+#         "http://localhost:5176",  # Vite React
+#         "http://localhost:5177",  # Vite React
+#         "http://localhost:5178",  # Vite React
+#           # Vite React
+#         "http://127.0.0.1:5173"   # Create React App
+#     ],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+
+# class QueryRequest(BaseModel):
+#     user_id: int
+#     question: str
+
+
+# @app.get("/")
+# def home():
+#     return {
+#         "message": "Backend is running successfully!"
+#     }
+
+
+# @app.post("/analyze")
+# def analyze(request: QueryRequest):
+#     try:
+#         # Run AI workflow
+#         result = run_workflow(
+#     request.user_id,
+#     request.question
+# )
+
+#         # Temporary user (until login integration)
+#         user_id = 1
+
+#         # Save query
+#         query_id = save_query(
+#             user_id,
+#             request.question
+#         )
+
+#         # Save AI response
+#         response_id = save_response(
+#             query_id,
+#             result["ai_response"]
+#         )
+
+#         # Save trust score
+#         save_trust_score(
+#             response_id,
+#             result["fact_score"],
+#             result["logic_score"],
+#             result["evidence_score"],
+#             result["hallucination_score"],
+#             result["trust_score"],
+#             result["trust_level"]
+#         )
+
+#         return result
+
+#     except Exception as e:
+#         return {
+#             "success": False,
+#             "error": str(e)
+#         }
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from agents.workflow import run_workflow
+from api.auth import router as auth_router
+from services.database_service import get_user_history
 
 app = FastAPI(
     title="Multi-Agent Hallucination Detection API",
     version="1.0.0"
 )
 
+app.include_router(auth_router)
+
 # Allow React frontend to connect
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173", 
-        "http://localhost:5174",  # Vite React
-        "http://localhost:5175",  # Vite React
-        "http://localhost:5176",  # Vite React
-        "http://localhost:5177",  # Vite React
-        "http://localhost:5178",  # Vite React
-          # Vite React
-        "http://127.0.0.1:5173"   # Create React App
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+        "http://localhost:5176",
+        "http://localhost:5177",
+        "http://localhost:5178",
+        "http://127.0.0.1:5173"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -61,6 +155,7 @@ app.add_middleware(
 
 
 class QueryRequest(BaseModel):
+    user_id: int
     question: str
 
 
@@ -74,8 +169,28 @@ def home():
 @app.post("/analyze")
 def analyze(request: QueryRequest):
     try:
-        result = run_workflow(request.question)
+        result = run_workflow(
+            request.user_id,
+            request.question
+        )
+
         return result
+
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+    
+@app.get("/history/{user_id}")
+def get_history(user_id: int):
+    try:
+        history = get_user_history(user_id)
+
+        return {
+            "success": True,
+            "history": history
+        }
 
     except Exception as e:
         return {
