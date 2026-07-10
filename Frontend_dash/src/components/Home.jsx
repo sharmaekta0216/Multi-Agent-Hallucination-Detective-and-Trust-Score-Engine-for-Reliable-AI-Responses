@@ -109,6 +109,7 @@
 // }
 // export default Home;
 import "../Styles/Home.css";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -126,9 +127,11 @@ function Home() {
           the final answer.
         </p>
 
-        <button className="hero-btn">
-          Get Started
-        </button>
+        <Link to="/login">
+          <button className="hero-btn">
+            Get Started
+          </button>
+        </Link>
       </section>
 
       {/* Features */}

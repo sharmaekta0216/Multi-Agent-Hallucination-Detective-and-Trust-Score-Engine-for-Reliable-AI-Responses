@@ -111,3 +111,24 @@
     color:white;
 
 }
+
+.login-subtitle{
+    margin-bottom:30px;
+}
+
+.signup-link{
+    margin-top:25px;
+    text-align:center;
+    color:#666;
+    font-size:15px;
+}
+
+.signup-link a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.signup-link a:hover{
+    text-decoration:underline;
+}

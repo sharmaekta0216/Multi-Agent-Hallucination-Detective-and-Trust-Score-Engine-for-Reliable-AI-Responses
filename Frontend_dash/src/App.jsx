@@ -191,6 +191,8 @@ import Signup from "./components/Signup";
 import Charts from "./components/Charts";
 import About from "./components/About";
 import Settings from "./components/Settings";
+import Profile from "./components/Profile";
+import History from "./components/History";
 
 import "./Styles/App.css";
 
@@ -207,6 +209,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/history" element={<History />} />
         <Route path="/settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>

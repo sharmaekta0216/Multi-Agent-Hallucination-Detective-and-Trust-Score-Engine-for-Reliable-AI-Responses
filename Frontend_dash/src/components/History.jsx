@@ -1,4 +1,4 @@
-function History({ history }) {
+/*function History({ history }) {
 
   return (
 
@@ -46,6 +46,33 @@ function History({ history }) {
 
   );
 
+}
+
+export default History;*/
+
+import "../Styles/History.css";
+
+function History() {
+
+  return (
+
+    <div className="history-page">
+
+      <div className="history-card">
+
+        <h1>🕒 Recent Questions</h1>
+
+        <p className="empty-history">
+
+          No recent questions found.
+
+        </p>
+
+      </div>
+
+    </div>
+
+  );
 }
 
 export default History;
