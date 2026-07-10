@@ -12,7 +12,7 @@
 #             "message": "Facts Verified"
 #         }
 import json
-from gemini_service import get_gemini_response
+from backend.services.gemini_service import get_gemini_response
 
 class FactAgent:
 
