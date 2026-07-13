@@ -116,7 +116,7 @@ function Team() {
       work: "MySQL Database, Query Optimization, Data Management"
     },
     {
-      name: "Kavita ",
+      name: "Kavita Bhati",
       role: "Backend Developer",
       work: "FastAPI APIs, Agent Integration, Validation"
     },

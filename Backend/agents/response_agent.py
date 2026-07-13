@@ -1,5 +1,5 @@
 
-from gemini_service import get_gemini_response
+from backend.services.gemini_service import get_gemini_response
 
 
 class ResponseAgent:
@@ -17,6 +17,7 @@ class ResponseAgent:
             }
 
         except Exception as e:
+            print("Error in generating response:", e)
             return {
                 "query": query,
                 "response": "Unable to generate response.",

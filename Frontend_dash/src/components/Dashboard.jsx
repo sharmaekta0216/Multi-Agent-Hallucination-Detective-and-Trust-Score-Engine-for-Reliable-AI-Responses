@@ -625,6 +625,7 @@ function Dashboard() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          user_id:1,
           question: question,
         }),
       });
