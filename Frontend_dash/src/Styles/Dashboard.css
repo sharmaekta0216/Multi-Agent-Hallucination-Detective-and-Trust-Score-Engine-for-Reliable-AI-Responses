@@ -276,7 +276,15 @@ button:disabled{
     border-radius:15px;
     padding:18px;
     font-size:18px;
-    background:#fff;
+    background:#0F172A;
+    color:white;
+    border:1px solid #334155;
+}
+
+.question-card textarea::placeholder{
+
+    color:#94A3B8;
+
 }
 
 .question-card button{
@@ -293,8 +301,13 @@ button:disabled{
 }
 
 .question-card button:hover{
-    background:#1d4ed8;
-    transform:scale(1.02);
+
+background:#1D4ED8;
+
+transform:translateY(-3px);
+
+box-shadow:0 10px 25px rgba(37,99,235,.35);
+
 }
 
 .score-section{
@@ -312,12 +325,19 @@ button:disabled{
 }
 
 .card{
-    background:white;
-    color:#111827;
+    background:#1E293B;
+    color:white;
+    border:1px solid #334155;
     border-radius:15px;
     padding:25px;
     text-align:center;
-    box-shadow:0 8px 20px rgba(0,0,0,.2);
+    box-shadow:0 8px 20px rgba(0,0,0,.3);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 30px rgba(37,99,235,.25);
 }
 
 .card h3{
@@ -325,17 +345,23 @@ button:disabled{
 }
 
 .card h2{
-    color:#2563eb;
-    font-size:34px;
+
+color:#60A5FA;
+
+font-size:36px;
+
+font-weight:bold;
+
 }
 
 .response-card{
     margin-top:35px;
-    background:white;
-    color:#111827;
+    background:#1E293B;
+    color:white;
+    border:1px solid #334155;
     border-radius:20px;
     padding:30px;
-    box-shadow:0 8px 25px rgba(0,0,0,.2);
+    box-shadow:0 8px 25px rgba(0,0,0,.3);
 }
 
 .response-card h2{
@@ -349,8 +375,11 @@ button:disabled{
 }
 
 .response-card span{
-    color:green;
-    font-weight:bold;
+
+color:#22C55E;
+
+font-weight:bold;
+
 }
 
 @media(max-width:900px){

@@ -157,36 +157,41 @@
   justify-content: space-between;
   align-items: center;
   padding: 18px 40px;
-  background: white;
+  background: #111827;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
+  height:70px;
+  overflow:visible;
 }
 
 /* Logo */
 .logo {
   font-size: 22px;
   font-weight: bold;
-  color: #2563eb;
+  color: #60A5FA;
 }
 
 /* Links */
 .nav-links {
   display: flex;
-  gap: 25px;
+  align-items: center;
+  gap: 22px;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links a {
   text-decoration: none;
-  color: #444;
+  color: #E2E8F0;
   font-weight: 600;
   transition: 0.3s;
 }
 
 .nav-links a:hover {
-  color: #2563eb;
+  color: #60A5FA;
 }
 
 /* Responsive */
@@ -203,15 +208,100 @@
   }
 }
 
-.settings-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #444;
-  transition: 0.3s;
+
+
+.nav-links a.active{
+
+    color:#2563eb;
+
+    font-weight:bold;
+
+    border-bottom:3px solid #2563eb;
+
+    padding-bottom:6px;
+
 }
 
-.settings-link:hover {
-  color: #2563eb;
-  transform: rotate(30deg);
+.settings-container{
+
+    position:relative;
+
+    list-style:none;
+
+}
+
+.settings-btn{
+    background: transparent;
+    border: none;
+    color: #E2E8F0;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all .3s ease;
+}
+
+.settings-btn:hover{
+    background: rgba(255,255,255,0.08);
+    color: #60A5FA;
+    transform: rotate(30deg);
+}
+
+.settings-menu{
+
+    position:absolute;
+
+    top:42px;
+
+    right:-15px;
+
+    width:200px;
+
+    background:#1E293B;
+
+    border:1px solid #334155;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    z-index:9999;
+
+    box-shadow:0 15px 30px rgba(0,0,0,.35);
+
+}
+
+.menu-item{
+
+    display:block;
+
+    padding:14px 18px;
+
+    text-decoration:none;
+
+    color:white;
+
+    transition:.3s;
+
+}
+
+.menu-item:hover{
+
+    background:#2563EB;
+
+}
+
+.logout{
+
+    color:#EF4444;
+
+}
+
+.settings-menu hr{
+
+    margin:0;
+
+    border:0;
+
+    border-top:1px solid #334155;
+
 }

@@ -44,7 +44,6 @@ function Login({ setPage }) {
 }
 
 export default Login;*/
-
 import "../Styles/Login.css";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -71,6 +70,7 @@ function Login() {
             placeholder="Enter your email"
           />
         </div>
+
 
         <div className="input-group">
           <label>Password</label>

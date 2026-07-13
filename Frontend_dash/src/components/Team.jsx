@@ -137,9 +137,12 @@ function Team() {
         {members.map((member, index) => (
           <div className="team-card" key={index}>
 
-            <div className="avatar">
-              {member.name.charAt(0)}
-            </div>
+           <div className="avatar">
+  {member.name
+    .split(" ")
+    .map(word => word[0])
+    .join("")}
+</div>
 
             <h2>{member.name}</h2>
 
