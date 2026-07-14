@@ -342,7 +342,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from backend.agents.workflow import run_workflow
+from agents.workflow import run_workflow
 from api.auth import router as auth_router
 from services.database_service import get_user_history
 
@@ -403,7 +403,7 @@ def analyze(request: QueryRequest):
             request.user_id,
             request.question
         )
-        print("Workflow completed")
+        print("Workflow completed",result)
         return result
     
     except Exception as e:

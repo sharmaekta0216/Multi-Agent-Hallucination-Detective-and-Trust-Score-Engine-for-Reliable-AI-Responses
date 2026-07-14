@@ -1,17 +1,32 @@
+# import mysql.connector
+
+
+# def get_connection():
+#     try:
+#         connection = mysql.connector.connect(
+#             host="localhost",
+#             user="root",
+#             password="root123",
+#             database="trust_score_db"
+#         )
+
+#         return connection
+
+#     except mysql.connector.Error as err:
+#         print("Database Error:", err)
+#         return None
 import mysql.connector
 
-
 def get_connection():
-    try:
-        connection = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="root123",
-            database="trust_score_db"
-        )
+    print("Trying to connect to MySQL...")
 
-        return connection
+    conn = mysql.connector.connect(
+    host="127.0.0.1",
+    user="root",
+    password="YOUR_MYSQL_PASSWORD",
+    database="trust_score_db",
+    connection_timeout=5
+)
 
-    except mysql.connector.Error as err:
-        print("Database Error:", err)
-        return None
+    print("Connected successfully!")
+    return conn

@@ -372,17 +372,19 @@
 #         "trust_score": trust["trust_score"],
 #         "trust_level": trust["trust_level"]
 #     }
-from backend.agents.response_agent import ResponseAgent
-from backend.agents.fact_checker import FactAgent
-from backend.agents.logic_checker import LogicAgent
-from backend.agents.evidence_agent import EvidenceAgent
-from backend.agents.hallucination_agent import HallucinationAgent
-from backend.score.trust_score import TrustAgent
+from agents.response_agent import ResponseAgent
+from agents.fact_checker import FactAgent
+from agents.logic_checker import LogicAgent
+from agents.evidence_agent import EvidenceAgent
+from agents.hallucination_agent import HallucinationAgent
+from score.trust_score import TrustAgent
 
-from backend.services.database_service import (
+from services.database_service import (
     save_query,
     save_response,
-    save_trust_score
+    save_trust_score,
+    save_evidence,
+    save_hallucination_analysis
 )
 
 
@@ -402,29 +404,51 @@ def run_workflow(user_id, query):
     print("3. Gemini Response:", response)
 
     ai_response = response["response"]
-
+    print("After gemini")
+    print("before save query")
     query_id = save_query(
         user_id=user_id,
         query_text=query
+        
     )
+    print("after save query")
 
     fact = fact_checker.check_fact(ai_response)
+    print("after fact checker")
     logic = logic_checker.check_logic(ai_response)
+    print("after logic checker")
     evidence = evidence_agent.check_evidence(ai_response)
+    print("after evidence checker")
     hallucination = hallucination_agent.detect_hallucination(ai_response)
+    print("after hallucination checker")
 
-    trust = trust_agent.calculate_score(
+    trust = trust_agent.calculate_score (
+        
         fact["fact_score"],
-        logic["logic_score"],
+          logic["logic_score"],
         evidence["evidence_score"],
         hallucination["hallucination_score"]
     )
+    print("after trust score calculation")
 
     response_id = save_response(
         query_id=query_id,
         response_text=ai_response,
         model_name="Gemini 2.5 Flash",
         response_time_ms=None
+    )
+    save_evidence(
+    response_id=response_id,
+    source_title="Evidence Source",
+    source_url="N/A",
+    evidence_text=evidence["message"]
+    )
+    save_hallucination_analysis(
+    response_id=response_id,
+    hallucination_score=hallucination["hallucination_score"],
+    unsupported_claims=0,
+    contradiction_count=0,
+    remarks=hallucination["message"]
     )
 
     save_trust_score(
