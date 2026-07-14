@@ -21,12 +21,12 @@ def get_connection():
     print("Trying to connect to MySQL...")
 
     conn = mysql.connector.connect(
-        host="127.0.0.1",
-        user="root",
-        password="root123",
-        database="trust_score_db",
-        connection_timeout=5
-    )
+    host="127.0.0.1",
+    user="root",
+    password="YOUR_MYSQL_PASSWORD",
+    database="trust_score_db",
+    connection_timeout=5
+)
 
     print("Connected successfully!")
     return conn
