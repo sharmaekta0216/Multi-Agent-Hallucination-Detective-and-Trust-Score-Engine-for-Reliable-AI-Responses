@@ -382,7 +382,9 @@ from score.trust_score import TrustAgent
 from services.database_service import (
     save_query,
     save_response,
-    save_trust_score
+    save_trust_score,
+    save_evidence,
+    save_hallucination_analysis
 )
 
 
@@ -434,6 +436,19 @@ def run_workflow(user_id, query):
         response_text=ai_response,
         model_name="Gemini 2.5 Flash",
         response_time_ms=None
+    )
+    save_evidence(
+    response_id=response_id,
+    source_title="Evidence Source",
+    source_url="N/A",
+    evidence_text=evidence["message"]
+    )
+    save_hallucination_analysis(
+    response_id=response_id,
+    hallucination_score=hallucination["hallucination_score"],
+    unsupported_claims=0,
+    contradiction_count=0,
+    remarks=hallucination["message"]
     )
 
     save_trust_score(

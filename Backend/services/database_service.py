@@ -208,3 +208,82 @@ def get_user_history(user_id):
     conn.close()
 
     return history
+# -----------------------------
+# EVIDENCE
+# -----------------------------
+
+def save_evidence(
+    response_id,
+    source_title,
+    source_url,
+    evidence_text
+):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    sql = """
+    INSERT INTO evidence
+    (
+        response_id,
+        source_title,
+        source_url,
+        evidence_text
+    )
+    VALUES (%s, %s, %s, %s)
+    """
+
+    cursor.execute(
+        sql,
+        (
+            response_id,
+            source_title,
+            source_url,
+            evidence_text
+        )
+    )
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+    # -----------------------------
+# HALLUCINATION ANALYSIS
+# -----------------------------
+
+def save_hallucination_analysis(
+    response_id,
+    hallucination_score,
+    unsupported_claims,
+    contradiction_count,
+    remarks
+):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    sql = """
+    INSERT INTO hallucination_analysis
+    (
+        response_id,
+        hallucination_score,
+        unsupported_claims,
+        contradiction_count,
+        remarks
+    )
+    VALUES (%s, %s, %s, %s, %s)
+    """
+
+    cursor.execute(
+        sql,
+        (
+            response_id,
+            hallucination_score,
+            unsupported_claims,
+            contradiction_count,
+            remarks
+        )
+    )
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
