@@ -1,7 +1,8 @@
 import "../styles/Signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function Signup({ setPage }) {
+function Signup() {
+  const navigate = useNavigate();
   return (
     <div className="signup-page">
 
@@ -40,9 +41,9 @@ function Signup({ setPage }) {
           />
         </div>
 
-        <button
+       <button
     className="signup-submit"
-    onClick={() => setPage("dashboard")}
+    onClick={() => navigate("/dashboard")}
 >
     Create Account
 </button>
