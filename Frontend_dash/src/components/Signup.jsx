@@ -1,4 +1,5 @@
 import "../styles/Signup.css";
+import { Link } from "react-router-dom";
 
 function Signup({ setPage }) {
   return (
@@ -45,6 +46,11 @@ function Signup({ setPage }) {
 >
     Create Account
 </button>
+
+<p className="login-link">
+  Already have an account?
+  <Link to="/login"> Log In</Link>
+</p>
 
       </div>
 

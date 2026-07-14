@@ -2,25 +2,25 @@ import "../Styles/Profile.css";
 
 function Profile() {
   return (
-
     <div className="profile-page">
 
       <div className="profile-card">
 
-        <h1>👤 Profile</h1>
+        <div className="profile-avatar">
+          FK
+        </div>
 
-        <p><strong>Name:</strong> User Name</p>
+        <h2 className="profile-name">
+          Falak Kumawat
+        </h2>
 
-        <p><strong>Email:</strong> user@email.com</p>
-
-        <p className="profile-note">
-          Profile information will be loaded from the database after login.
+        <p className="profile-email">
+          falak@example.com
         </p>
 
       </div>
 
     </div>
-
   );
 }
 

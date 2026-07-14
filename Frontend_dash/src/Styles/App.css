@@ -123,8 +123,11 @@ body {
   font-family:'Poppins',sans-serif;
 }
 
-body{
-  background:#eef4ff;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0F172A;
+    color: #F8FAFC;
 }
 
 .app{

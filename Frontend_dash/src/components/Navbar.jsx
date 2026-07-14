@@ -81,13 +81,41 @@
 // }
 
 // export default Navbar;
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import "../Styles/Navbar.css";
 import { FiSettings } from "react-icons/fi";
+import SettingsDropdown from "./SettingsDropdown";
+
 
 function Navbar() {
+
+  const [showSettings, setShowSettings] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+
+  function handleClickOutside(event) {
+
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target)
+    ) {
+      setShowSettings(false);
+    }
+
+  }
+
+  document.addEventListener("mousedown", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+
+}, []);
+
   return (
+    <>
     <nav className="navbar">
 
       {/* Logo */}
@@ -99,43 +127,61 @@ function Navbar() {
       <ul className="nav-links">
 
         <li>
-          <Link to="/">Home</Link>
+          <NavLink to="/">Home</NavLink>
         </li>
 
         <li>
-          <Link to="/dashboard">Dashboard</Link>
+          <NavLink to="/dashboard">Dashboard</NavLink>
         </li>
 
         <li>
-          <Link to="/charts">Charts</Link>
+          <NavLink to="/charts">Charts</NavLink>
         </li>
 
         <li>
-          <Link to="/team">Team</Link>
+          <NavLink to="/team">Team</NavLink>
         </li>
 
         <li>
-          <Link to="/about">About</Link>
+          <NavLink to="/about">About</NavLink>
         </li>
 
         <li>
-          <Link to="/login">Login</Link>
+          <NavLink to="/login">Login</NavLink>
         </li>
 
         <li>
-          <Link to="/signup">Sign Up</Link>
+          <NavLink to="/signup">Sign Up</NavLink>
         </li>
 
-        <li>
-          <Link to="/settings" className="settings-link">
-          <FiSettings size={22} />
-          </Link>
-        </li>
+       <li className="settings-wrapper">
+
+    <button
+        className="settings-btn"
+        onClick={() => setShowSettings(!showSettings)}
+    >
+        <FiSettings size={22} />
+    </button>
+
+</li>
 
       </ul>
 
-    </nav>
-  );
+</nav>
+
+{showSettings && (
+
+  <div ref={dropdownRef}>
+
+    <SettingsDropdown
+      onClose={() => setShowSettings(false)}
+    />
+
+  </div>
+
+)}
+</>
+);
 }
 
 export default Navbar;

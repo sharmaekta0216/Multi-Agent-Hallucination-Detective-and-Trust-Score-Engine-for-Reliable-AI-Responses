@@ -126,8 +126,13 @@
 .team-page{
     padding:60px 30px;
     text-align:center;
-    background:#eef4ff;
     min-height:100vh;
+    background:linear-gradient(
+        135deg,
+        #0F172A,
+        #1E293B,
+        #111827
+    );
 }
 
 .team-page h1{
@@ -137,7 +142,7 @@
 }
 
 .team-subtitle{
-    color:#555;
+    color:#CBD5E1;
     font-size:18px;
     margin-bottom:50px;
 }
@@ -151,15 +156,19 @@
 }
 
 .team-card{
-    background:white;
+    background:#1E293B;
+    color:white;
+    border:1px solid #334155;
     border-radius:20px;
     padding:30px;
-    box-shadow:0 10px 25px rgba(0,0,0,.12);
-    transition:.3s;
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
+    transition:.35s ease;
 }
 
 .team-card:hover{
-    transform:translateY(-10px);
+    transform:translateY(-10px) scale(1.03);
+    border-color:#3B82F6;
+    box-shadow:0 18px 40px rgba(37,99,235,.35);
 }
 
 .avatar{
@@ -177,18 +186,19 @@
 }
 
 .team-card h2{
-    color:#2563eb;
+    color:#60A5FA;
     margin-bottom:10px;
 }
 
 .team-card h4{
-    color:#444;
+    color:#F8FAFC;
     margin-bottom:15px;
+    font-weight:600;
 }
 
 .team-card p{
-    color:#666;
-    line-height:1.7;
+    color:#CBD5E1;
+    line-height:1.8;
 }
 
 @media(max-width:768px){
