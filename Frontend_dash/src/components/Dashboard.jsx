@@ -610,36 +610,70 @@ function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
 
-  const analyzeResponse = async () => {
-    if (!question.trim()) {
-      alert("Please enter a question!");
-      return;
-    }
+//   const analyzeResponse = async () => {
+//     if (!question.trim()) {
+//       alert("Please enter a question!");
+//       return;
+//     }
 
-    setLoading(true);
+//     setLoading(true);
 
-    try {
-      const response = await fetch("http://127.0.0.1:8000/analyze", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id:1,
-          question: question,
-        }),
-      });
+//     try {
+//       const response = await fetch("http://127.0.0.1:8000/analyze", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           user_id:1,
+//           question: question,
+//         }),
+//       });
 
-      const data = await response.json();
-      setResult(data);
-    } catch (error) {
-      console.log(error);
-      alert("Backend not connected!");
-    }
+//       // const data = await response.json();
+//       // setResult(data)
+//       console.log("Status:", response.status);
 
+// const data = await response.json();
+
+// console.log("Response:", data);
+
+// setResult(data);
+// console.log("Result set:");
+//     } catch (error) {
+//       console.error(error);
+//       alert(error.message);
+//     }
+
+//     setLoading(false);
+//   };
+const analyzeResponse = async () => {
+  setLoading(true);
+
+  try {
+    const response = await fetch("http://127.0.0.1:8000/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: 1,
+        question,
+      }),
+    });
+
+    console.log("Status:", response.status);
+
+    const data = await response.json();
+    console.log("DATA:", data);
+
+    setResult(data);
+  } catch (err) {
+    console.error(err);
+  } finally {
     setLoading(false);
-  };
-
+  }
+};
   return (
     <div className="dashboard">
 

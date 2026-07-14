@@ -1,5 +1,7 @@
 from database import get_connection
-
+print("Database service module loaded successfully:",
+get_connection.__module__)
+print(get_connection)
 # -----------------------------
 # USER OPERATIONS
 # -----------------------------
@@ -42,26 +44,54 @@ def get_user_by_email(email):
 # QUERY
 # -----------------------------
 
+# def save_query(user_id, query_text):
+#     conn = get_connection()
+#     cursor = conn.cursor()
+
+#     sql = """
+#     INSERT INTO queries(user_id, query_text)
+#     VALUES (%s, %s)
+#     """
+
+#     cursor.execute(sql, (user_id, query_text))
+#     conn.commit()
+
+#     query_id = cursor.lastrowid
+
+#     cursor.close()
+#     conn.close()
+
+#     return query_id
+
 def save_query(user_id, query_text):
+    print("Inside save_query")
+    print("1")
     conn = get_connection()
+    print("2")
+
     cursor = conn.cursor()
+    print("3")
 
     sql = """
     INSERT INTO queries(user_id, query_text)
     VALUES (%s, %s)
     """
 
+    print("4")
     cursor.execute(sql, (user_id, query_text))
+    print("5")
+
     conn.commit()
+    print("6")
 
     query_id = cursor.lastrowid
+    print("7")
 
     cursor.close()
     conn.close()
+    print("8")
 
     return query_id
-
-
 # -----------------------------
 # RESPONSE
 # -----------------------------
