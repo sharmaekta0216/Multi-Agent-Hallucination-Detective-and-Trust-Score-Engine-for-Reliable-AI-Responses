@@ -597,7 +597,15 @@
 
 
 
-
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 
 
@@ -674,84 +682,209 @@ const analyzeResponse = async () => {
     setLoading(false);
   }
 };
-  return (
-    <div className="dashboard">
+const chartData = result
+  ? [
+      { agent: "Fact", score: result.fact_score },
+      { agent: "Logic", score: result.logic_score },
+      { agent: "Evidence", score: result.evidence_score },
+      { agent: "Hallucination", score: result.hallucination_score },
+    ]
+  : [];
+//   return (
+//     <div className="dashboard">
 
-      <div className="dashboard-header">
-        <h1>🤖 Multi-Agent Hallucination Detector</h1>
-        <p>Trust Score Engine for Reliable AI Responses</p>
-      </div>
+//       <div className="dashboard-header">
+//         <h1>🤖 Multi-Agent Hallucination Detector</h1>
+//         <p>Trust Score Engine for Reliable AI Responses</p>
+//       </div>
 
-      <div className="question-card">
+//       <div className="question-card">
 
-        <textarea
-          placeholder="Ask any question..."
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-        />
+//         <textarea
+//           placeholder="Ask any question..."
+//           value={question}
+//           onChange={(e) => setQuestion(e.target.value)}
+//         />
 
-        <button onClick={analyzeResponse}>
-          {loading ? "Analyzing..." : "Analyze"}
-        </button>
+//         <button onClick={analyzeResponse}>
+//           {loading ? "Analyzing..." : "Analyze"}
+//         </button>
 
-      </div>
+//       </div>
 
-      {result && (
+//       {result && (
 
-        <>
+//         <>
 
-          <div className="score-section">
+//           <div className="score-section">
 
-            <CircularScore
-              title="Trust Score"
-              value={result.trust_score}
-            />
+//             <CircularScore
+//               title="Trust Score"
+//               value={result.trust_score}
+//             />
 
-            <div className="score-grid">
+//             <div className="score-grid">
 
-              <div className="card">
-                <h3>Fact Score</h3>
-                <h2>{result.fact_score}</h2>
-              </div>
+//               <div className="card">
+//                 <h3>Fact Score</h3>
+//                 <h2>{result.fact_score}</h2>
+//               </div>
 
-              <div className="card">
-                <h3>Logic Score</h3>
-                <h2>{result.logic_score}</h2>
-              </div>
+//               <div className="card">
+//                 <h3>Logic Score</h3>
+//                 <h2>{result.logic_score}</h2>
+//               </div>
 
-              <div className="card">
-                <h3>Evidence Score</h3>
-                <h2>{result.evidence_score}</h2>
-              </div>
+//               <div className="card">
+//                 <h3>Evidence Score</h3>
+//                 <h2>{result.evidence_score}</h2>
+//               </div>
 
-              <div className="card">
-                <h3>Hallucination</h3>
-                <h2>{result.hallucination_score}</h2>
-              </div>
+//               <div className="card">
+//                 <h3>Hallucination</h3>
+//                 <h2>{result.hallucination_score}</h2>
+//               </div>
 
+//             </div>
+
+//           </div>
+
+//           <div className="response-card">
+
+//             <h2>AI Response</h2>
+
+//             <p>{result.ai_response}</p>
+
+//             <h3>
+//               Trust Level :
+//               <span> {result.trust_level}</span>
+//             </h3>
+
+//           </div>
+
+//         </>
+
+//       )}
+
+//     </div>
+  
+//       <div className="chart-card">
+//       <h2>Agent Performance</h2>
+
+//      <ResponsiveContainer width="100%" height={300}>
+//     <BarChart data={chartData}>
+//       <CartesianGrid strokeDasharray="3 3" />
+//       <XAxis dataKey="agent" />
+//       <YAxis domain={[0, 100]} />
+//       <Tooltip />
+//       <Bar dataKey="score" />
+//       </BarChart>
+//        </ResponsiveContainer>
+//     </div>
+//   );
+// }
+
+// export default Dashboard;
+return (
+  <div className="dashboard">
+
+    <div className="dashboard-header">
+      <h1>🤖 Multi-Agent Hallucination Detector</h1>
+      <p>Trust Score Engine for Reliable AI Responses</p>
+    </div>
+
+    <div className="question-card">
+      <textarea
+        placeholder="Ask any question..."
+        value={question}
+        onChange={(e) => setQuestion(e.target.value)}
+      />
+
+      <button onClick={analyzeResponse}>
+        {loading ? "Analyzing..." : "Analyze"}
+      </button>
+    </div>
+
+    {result && (
+      <>
+        {/* Score Section */}
+        <div className="score-section">
+
+          <CircularScore
+            title="Trust Score"
+            value={result.trust_score}
+          />
+
+          <div className="score-grid">
+
+            <div className="card">
+              <h3>Fact Score</h3>
+              <h2>{result.fact_score}</h2>
+            </div>
+
+            <div className="card">
+              <h3>Logic Score</h3>
+              <h2>{result.logic_score}</h2>
+            </div>
+
+            <div className="card">
+              <h3>Evidence Score</h3>
+              <h2>{result.evidence_score}</h2>
+            </div>
+
+            <div className="card">
+              <h3>Hallucination Score</h3>
+              <h2>{result.hallucination_score}</h2>
             </div>
 
           </div>
+        </div>
 
-          <div className="response-card">
+        {/* AI Response */}
+        <div className="response-card">
 
-            <h2>AI Response</h2>
+          <h2>AI Response</h2>
 
-            <p>{result.ai_response}</p>
+          <p>{result.ai_response}</p>
 
-            <h3>
-              Trust Level :
-              <span> {result.trust_level}</span>
-            </h3>
+          <h3>
+            Trust Level :
+            <span> {result.trust_level}</span>
+          </h3>
 
-          </div>
+        </div>
 
-        </>
+        {/* Agent Performance Chart */}
 
-      )}
+        <div className="chart-card">
 
-    </div>
-  );
+          <h2>Agent Performance</h2>
+
+          <ResponsiveContainer width="100%" height={300}>
+
+            <BarChart data={chartData}>
+
+              <CartesianGrid strokeDasharray="3 3" />
+
+              <XAxis dataKey="agent" />
+
+              <YAxis domain={[0, 100]} />
+
+              <Tooltip />
+
+              <Bar dataKey="score" />
+
+            </BarChart>
+
+          </ResponsiveContainer>
+
+        </div>
+
+      </>
+    )}
+
+  </div>
+);
 }
 
 export default Dashboard;
