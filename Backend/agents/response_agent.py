@@ -132,78 +132,135 @@
 #             }
 
 
+# from services.gemini_service import get_gemini_response
+
+
+# class ResponseAgent:
+
+#     def __init__(self):
+#         print("Response Agent Initialized")
+
+#     def generate_response(self, query):
+
+#         prompt = f"""
+# You are an expert AI assistant.
+
+# Your goal is to generate a factually accurate, well-structured, and evidence-based answer.
+
+# User Question:
+# {query}
+
+# Follow this EXACT structure.
+
+# Answer:
+# (Give a direct answer.)
+
+# Explanation:
+# (Explain the answer in 2–5 concise paragraphs.)
+
+# Key Facts:
+# - Fact 1
+# - Fact 2
+# - Fact 3
+# - Fact 4 (if applicable)
+
+# Evidence:
+# - Mention official organizations, government websites, academic papers, or other reliable sources.
+# - If exact sources are unavailable, state that the answer is based on well-established public knowledge.
+
+# Limitations / Uncertainty:
+# - Mention any uncertainty, assumptions, or information that may change over time.
+# - If there is no uncertainty, write:
+#   "No known uncertainty."
+
+# Rules:
+# 1. Never fabricate facts.
+# 2. Never invent names, dates, statistics, quotations, or references.
+# 3. If you are unsure, clearly say so.
+# 4. Separate facts from opinions.
+# 5. Use simple professional English.
+# 6. Keep the answer concise but complete.
+# 7. Do NOT use markdown tables.
+# 8. Do NOT include unnecessary introductions or conclusions.
+# """
+
+#         try:
+
+#             print("\n========== RESPONSE AGENT ==========")
+
+#             ai_response = get_gemini_response(prompt)
+
+#             print("AI Response Generated Successfully.")
+
+#             return {
+#                 "query": query,
+#                 "response": ai_response
+#             }
+
+#         except Exception as e:
+
+#             print("\nResponse Agent Error:")
+#             print(e)
+
+#             return {
+#                 "query": query,
+#                 "response": "Unable to generate response.",
+#                 "error": str(e)
+#             }
 from services.gemini_service import get_gemini_response
 
 
 class ResponseAgent:
 
     def __init__(self):
+
         print("Response Agent Initialized")
 
     def generate_response(self, query):
 
         prompt = f"""
-You are an expert AI assistant.
+You are ChatGPT-level professional AI.
 
-Your goal is to generate a factually accurate, well-structured, and evidence-based answer.
+Answer the user's question naturally.
 
-User Question:
+Requirements:
+
+• Write like ChatGPT.
+• Never output JSON.
+• Never output code unless requested.
+• Use headings.
+• Use bullet points where useful.
+• Explain in simple English.
+• Include important facts.
+• Mention uncertainty only if required.
+
+Question:
+
 {query}
-
-Follow this EXACT structure.
-
-Answer:
-(Give a direct answer.)
-
-Explanation:
-(Explain the answer in 2–5 concise paragraphs.)
-
-Key Facts:
-- Fact 1
-- Fact 2
-- Fact 3
-- Fact 4 (if applicable)
-
-Evidence:
-- Mention official organizations, government websites, academic papers, or other reliable sources.
-- If exact sources are unavailable, state that the answer is based on well-established public knowledge.
-
-Limitations / Uncertainty:
-- Mention any uncertainty, assumptions, or information that may change over time.
-- If there is no uncertainty, write:
-  "No known uncertainty."
-
-Rules:
-1. Never fabricate facts.
-2. Never invent names, dates, statistics, quotations, or references.
-3. If you are unsure, clearly say so.
-4. Separate facts from opinions.
-5. Use simple professional English.
-6. Keep the answer concise but complete.
-7. Do NOT use markdown tables.
-8. Do NOT include unnecessary introductions or conclusions.
 """
 
         try:
 
             print("\n========== RESPONSE AGENT ==========")
 
-            ai_response = get_gemini_response(prompt)
-
-            print("AI Response Generated Successfully.")
+            answer = get_gemini_response(prompt)
 
             return {
+
                 "query": query,
-                "response": ai_response
+
+                "response": answer
+
             }
 
         except Exception as e:
 
-            print("\nResponse Agent Error:")
-            print(e)
-
             return {
+
                 "query": query,
+
                 "response": "Unable to generate response.",
+
                 "error": str(e)
+
             }

@@ -48,8 +48,101 @@
 #             "error":"{str(e)}"
 #         }}
 #         '''
+# import os
+# import google as genai
+# from dotenv import load_dotenv
+
+# load_dotenv()
+
+# api_key = os.getenv("GEMINI_API_KEY")
+
+# if not api_key:
+#     raise ValueError("GEMINI_API_KEY not found in .env file.")
+
+# genai.configure(api_key=api_key)
+
+# model = genai.GenerativeModel("gemini-2.5-flash")
+
+
+# def get_gemini_response(prompt):
+
+#     try:
+
+#         response = model.generate_content(prompt)
+
+#         # Check for empty response
+#         if response is None:
+#             raise Exception("Gemini returned None.")
+
+#         # Check text exists
+#         if hasattr(response, "text") and response.text:
+#             return response.text.strip()
+
+#         # Sometimes Gemini returns candidates instead of text
+#         if hasattr(response, "candidates") and response.candidates:
+
+#             try:
+#                 parts = response.candidates[0].content.parts
+
+#                 text = "".join(
+#                     part.text
+#                     for part in parts
+#                     if hasattr(part, "text")
+#                 )
+
+#                 if text.strip():
+#                     return text.strip()
+
+#             except Exception:
+#                 pass
+
+#         raise Exception("Empty response from Gemini.")
+
+#     except Exception as e:
+
+#         print("\n========== GEMINI ERROR ==========")
+#         print(str(e))
+#         print("==================================")
+
+#         raise Exception(str(e))
+# from google import genai
+
+# print(genai.__file__)
+# import os
+# from dotenv import load_dotenv
+# from google import genai
+
+# load_dotenv()
+
+# api_key = os.getenv("GEMINI_API_KEY")
+
+# if not api_key:
+#     raise ValueError("GEMINI_API_KEY not found.")
+
+# client = genai.Client(api_key=api_key)
+
+
+# def get_gemini_response(prompt):
+  
+#     try:
+#         print("Using latest google-genai SDK")
+#         print("Model: gemini-2.5-flash")
+#         response = client.models.generate_content(
+#             model="gemini-3.5-flash",
+#             contents=prompt
+#         )
+
+#         if response.text:
+#             return response.text.strip()
+
+#         raise Exception("Empty response from Gemini.")
+
+#     except Exception as e:
+#         print("Gemini Error:", e)
+#         raise Exception(str(e))
 import os
-import google.generativeai as genai
+import time
+from google import genai
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -57,51 +150,46 @@ load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
-    raise ValueError("GEMINI_API_KEY not found in .env file.")
+    raise Exception("GEMINI_API_KEY not found in .env")
 
-genai.configure(api_key=api_key)
+client = genai.Client(api_key=api_key)
 
-model = genai.GenerativeModel("gemini-2.5-flash")
+MODEL_NAME = "gemini-3.5-flash"
 
 
-def get_gemini_response(prompt):
+def get_gemini_response(prompt, retries=3):
 
-    try:
+    for attempt in range(retries):
 
-        response = model.generate_content(prompt)
+        try:
 
-        # Check for empty response
-        if response is None:
-            raise Exception("Gemini returned None.")
+            response = client.models.generate_content(
+                model=MODEL_NAME,
+                contents=prompt
+            )
 
-        # Check text exists
-        if hasattr(response, "text") and response.text:
-            return response.text.strip()
+            if (
+                response
+                and hasattr(response, "text")
+                and response.text
+            ):
+                return response.text.strip()
 
-        # Sometimes Gemini returns candidates instead of text
-        if hasattr(response, "candidates") and response.candidates:
+            raise Exception("Empty response from Gemini.")
 
-            try:
-                parts = response.candidates[0].content.parts
+        except Exception as e:
 
-                text = "".join(
-                    part.text
-                    for part in parts
-                    if hasattr(part, "text")
-                )
+            error = str(e)
 
-                if text.strip():
-                    return text.strip()
+            print("\n========== GEMINI ERROR ==========")
+            print(error)
 
-            except Exception:
-                pass
+            if "429" in error and attempt < retries - 1:
 
-        raise Exception("Empty response from Gemini.")
+                print("Retrying after quota wait...")
 
-    except Exception as e:
+                time.sleep(5)
 
-        print("\n========== GEMINI ERROR ==========")
-        print(str(e))
-        print("==================================")
+                continue
 
-        raise Exception(str(e))
+            raise Exception(error)

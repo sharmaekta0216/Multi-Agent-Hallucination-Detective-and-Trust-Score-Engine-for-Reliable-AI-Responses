@@ -372,11 +372,114 @@
 #         "trust_score": trust["trust_score"],
 #         "trust_level": trust["trust_level"]
 #     }
+# from agents.response_agent import ResponseAgent
+# from agents.fact_checker import FactAgent
+# from agents.logic_checker import LogicAgent
+# from agents.evidence_agent import EvidenceAgent
+# from agents.hallucination_agent import HallucinationAgent
+# from score.trust_score import TrustAgent
+# from agents.analysis_agent import AnalysisAgent
+# from services.database_service import (
+#     save_query,
+#     save_response,
+#     save_trust_score,
+#     save_evidence,
+#     save_hallucination_analysis
+# )
+
+
+# def run_workflow(user_id, query):
+
+#     print("1. Workflow Started")
+
+#     response_agent = ResponseAgent()
+#     fact_checker = FactAgent()
+#     logic_checker = LogicAgent()
+#     evidence_agent = EvidenceAgent()
+#     hallucination_agent = HallucinationAgent()
+#     trust_agent = TrustAgent()
+
+#     print("2. Calling Gemini...")
+#     response = response_agent.generate_response(query)
+#     print("3. Gemini Response:", response)
+
+#     ai_response = response["response"]
+#     print("After gemini")
+#     print("before save query")
+#     query_id = save_query(
+#         user_id=user_id,
+#         query_text=query
+        
+#     )
+#     print("after save query")
+
+#     fact = fact_checker.check_fact(ai_response)
+#     print("after fact checker")
+#     logic = logic_checker.check_logic(ai_response)
+#     print("after logic checker")
+#     evidence = evidence_agent.check_evidence(ai_response)
+#     print("after evidence checker")
+#     hallucination = hallucination_agent.detect_hallucination(ai_response)
+#     print("after hallucination checker")
+
+#     trust = trust_agent.calculate_score (
+        
+#         fact["fact_score"],
+#           logic["logic_score"],
+#         evidence["evidence_score"],
+#         hallucination["hallucination_score"]
+#     )
+#     print("after trust score calculation")
+
+#     response_id = save_response(
+#         query_id=query_id,
+#         response_text=ai_response,
+#         model_name="Gemini 2.5 Flash",
+#         response_time_ms=None
+#     )
+#     save_evidence(
+#     response_id=response_id,
+#     source_title="Evidence Source",
+#     source_url="N/A",
+#     evidence_text=evidence["message"]
+#     )
+#     save_hallucination_analysis(
+#     response_id=response_id,
+#     hallucination_score=hallucination["hallucination_score"],
+#     unsupported_claims=0,
+#     contradiction_count=0,
+#     remarks=hallucination["message"]
+#     )
+
+#     save_trust_score(
+#         response_id=response_id,
+#         fact_score=fact["fact_score"],
+#         logic_score=logic["logic_score"],
+#         evidence_score=evidence["evidence_score"],
+#         hallucination_score=hallucination["hallucination_score"],
+#         final_trust_score=trust["trust_score"],
+#         trust_level=trust["trust_level"]
+#     )
+
+#     print("4. Workflow Complete")
+
+#     return {
+#         "success": True,
+#         "question": query,
+#         "ai_response": ai_response,
+#         "fact_score": fact["fact_score"],
+#         "fact_message": fact["message"],
+#         "logic_score": logic["logic_score"],
+#         "logic_message": logic["message"],
+#         "evidence_score": evidence["evidence_score"],
+#         "evidence_message": evidence["message"],
+#         "hallucination_score": hallucination["hallucination_score"],
+#         "hallucination_message": hallucination["message"],
+#         "trust_score": trust["trust_score"],
+#         "trust_level": trust["trust_level"]
+#     }
 from agents.response_agent import ResponseAgent
-from agents.fact_checker import FactAgent
-from agents.logic_checker import LogicAgent
-from agents.evidence_agent import EvidenceAgent
-from agents.hallucination_agent import HallucinationAgent
+from agents.analysis_agent import AnalysisAgent
 from score.trust_score import TrustAgent
 
 from services.database_service import (
@@ -390,91 +493,112 @@ from services.database_service import (
 
 def run_workflow(user_id, query):
 
-    print("1. Workflow Started")
+    print("========== WORKFLOW STARTED ==========")
 
     response_agent = ResponseAgent()
-    fact_checker = FactAgent()
-    logic_checker = LogicAgent()
-    evidence_agent = EvidenceAgent()
-    hallucination_agent = HallucinationAgent()
+    analysis_agent = AnalysisAgent()
     trust_agent = TrustAgent()
 
-    print("2. Calling Gemini...")
+    print("Generating AI Response...")
+
     response = response_agent.generate_response(query)
-    print("3. Gemini Response:", response)
 
     ai_response = response["response"]
-    print("After gemini")
-    print("before save query")
+
+    print("AI Response Generated")
+
     query_id = save_query(
         user_id=user_id,
         query_text=query
-        
     )
-    print("after save query")
 
-    fact = fact_checker.check_fact(ai_response)
-    print("after fact checker")
-    logic = logic_checker.check_logic(ai_response)
-    print("after logic checker")
-    evidence = evidence_agent.check_evidence(ai_response)
-    print("after evidence checker")
-    hallucination = hallucination_agent.detect_hallucination(ai_response)
-    print("after hallucination checker")
+    print("Query Saved")
 
-    trust = trust_agent.calculate_score (
-        
-        fact["fact_score"],
-          logic["logic_score"],
-        evidence["evidence_score"],
-        hallucination["hallucination_score"]
+    analysis = analysis_agent.analyze(ai_response)
+
+    print("Analysis Completed")
+
+    trust = trust_agent.calculate_score(
+
+        analysis["fact_score"],
+        analysis["logic_score"],
+        analysis["evidence_score"],
+        analysis["hallucination_score"]
+
     )
-    print("after trust score calculation")
+
+    print("Trust Score Calculated")
 
     response_id = save_response(
+
         query_id=query_id,
         response_text=ai_response,
-        model_name="Gemini 2.5 Flash",
+        model_name="Gemini 3.5 Flash",
         response_time_ms=None
+
     )
+
     save_evidence(
-    response_id=response_id,
-    source_title="Evidence Source",
-    source_url="N/A",
-    evidence_text=evidence["message"]
+
+        response_id=response_id,
+        source_title="Evidence Analysis",
+        source_url="N/A",
+        evidence_text=analysis["evidence_message"]
+
     )
+
     save_hallucination_analysis(
-    response_id=response_id,
-    hallucination_score=hallucination["hallucination_score"],
-    unsupported_claims=0,
-    contradiction_count=0,
-    remarks=hallucination["message"]
+
+        response_id=response_id,
+        hallucination_score=analysis["hallucination_score"],
+        unsupported_claims=0,
+        contradiction_count=0,
+        remarks=analysis["hallucination_message"]
+
     )
 
     save_trust_score(
+
         response_id=response_id,
-        fact_score=fact["fact_score"],
-        logic_score=logic["logic_score"],
-        evidence_score=evidence["evidence_score"],
-        hallucination_score=hallucination["hallucination_score"],
+
+        fact_score=analysis["fact_score"],
+
+        logic_score=analysis["logic_score"],
+
+        evidence_score=analysis["evidence_score"],
+
+        hallucination_score=analysis["hallucination_score"],
+
         final_trust_score=trust["trust_score"],
+
         trust_level=trust["trust_level"]
+
     )
 
-    print("4. Workflow Complete")
+    print("========== WORKFLOW COMPLETE ==========")
 
     return {
+
         "success": True,
+
         "question": query,
+
         "ai_response": ai_response,
-        "fact_score": fact["fact_score"],
-        "fact_message": fact["message"],
-        "logic_score": logic["logic_score"],
-        "logic_message": logic["message"],
-        "evidence_score": evidence["evidence_score"],
-        "evidence_message": evidence["message"],
-        "hallucination_score": hallucination["hallucination_score"],
-        "hallucination_message": hallucination["message"],
+
+        "fact_score": analysis["fact_score"],
+        "fact_message": analysis["fact_message"],
+
+        "logic_score": analysis["logic_score"],
+        "logic_message": analysis["logic_message"],
+
+        "evidence_score": analysis["evidence_score"],
+        "evidence_message": analysis["evidence_message"],
+
+        "hallucination_score": analysis["hallucination_score"],
+        "hallucination_message": analysis["hallucination_message"],
+
         "trust_score": trust["trust_score"],
+
         "trust_level": trust["trust_level"]
+
     }
