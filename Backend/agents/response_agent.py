@@ -207,36 +207,106 @@
 #                 "response": "Unable to generate response.",
 #                 "error": str(e)
 #             }
+# from backend.api import query
+# from services.gemini_service import get_gemini_response
+
+
+# class ResponseAgent:
+
+#     def __init__(self):
+
+#         print("Response Agent Initialized")
+
+#     def generate_response(self, query):
+
+# #         prompt = f"""
+# # You are ChatGPT-level professional AI.
+
+# # Answer the user's question naturally.
+
+# # Requirements:
+
+# # • Write like ChatGPT.
+# # • Never output JSON.
+# # • Never output code unless requested.
+# # • Use headings.
+# # • Use bullet points where useful.
+# # • Explain in simple English.
+# # • Include important facts.
+# # • Mention uncertainty only if required.
+
+# # Question:
+# prompt = f"""
+# Answer the question below.
+
+# Question:
+# {query}
+
+# Instructions:
+# - Write in Markdown.
+# - Use headings (## or ###).
+# - Use bullet points where appropriate.
+# - Keep the answer neat and easy to read.
+# - Do not return JSON.
+# - Keep the answer concise and professional.
+# """
+
+# {query}
+# """
+
+#         try:
+
+#             print("\n========== RESPONSE AGENT ==========")
+
+#             answer = get_gemini_response(prompt)
+
+#             return {
+
+#                 "query": query,
+
+#                 "response": answer
+
+#             }
+
+#         except Exception as e:
+
+#             return {
+
+#                 "query": query,
+
+#                 "response": "Unable to generate response.",
+
+#                 "error": str(e)
+
+#             }
 from services.gemini_service import get_gemini_response
 
 
 class ResponseAgent:
 
     def __init__(self):
-
         print("Response Agent Initialized")
 
     def generate_response(self, query):
 
         prompt = f"""
-You are ChatGPT-level professional AI.
+You are a professional AI assistant.
 
-Answer the user's question naturally.
-
-Requirements:
-
-• Write like ChatGPT.
-• Never output JSON.
-• Never output code unless requested.
-• Use headings.
-• Use bullet points where useful.
-• Explain in simple English.
-• Include important facts.
-• Mention uncertainty only if required.
+Answer the following question in a clean and well-formatted Markdown style.
 
 Question:
-
 {query}
+
+Instructions:
+- Give a direct answer first.
+- Use Markdown headings (## and ###).
+- Use bullet points where appropriate.
+- Highlight important terms using **bold**.
+- Keep the answer easy to understand.
+- Keep paragraphs short.
+- Do NOT return JSON.
+- Do NOT mention these instructions.
+- If the answer contains facts, explain them briefly.
 """
 
         try:
@@ -246,21 +316,14 @@ Question:
             answer = get_gemini_response(prompt)
 
             return {
-
                 "query": query,
-
                 "response": answer
-
             }
 
         except Exception as e:
 
             return {
-
                 "query": query,
-
                 "response": "Unable to generate response.",
-
                 "error": str(e)
-
             }

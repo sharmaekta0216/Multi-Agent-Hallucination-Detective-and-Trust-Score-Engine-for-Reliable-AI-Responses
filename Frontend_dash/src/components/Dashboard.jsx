@@ -596,7 +596,8 @@
 
 
 
-
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import {
   BarChart,
   Bar,
@@ -607,8 +608,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-
-
 import { useState } from "react";
 import "../Styles/Dashboard.css";
 import CircularScore from "./CircularScore";
@@ -618,275 +617,204 @@ function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
 
-//   const analyzeResponse = async () => {
-//     if (!question.trim()) {
-//       alert("Please enter a question!");
-//       return;
-//     }
+  const analyzeResponse = async () => {
+    if (!question.trim()) {
+      alert("Please enter a question.");
+      return;
+    }
 
-//     setLoading(true);
+    setLoading(true);
 
-//     try {
-//       const response = await fetch("http://127.0.0.1:8000/analyze", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({
-//           user_id:1,
-//           question: question,
-//         }),
-//       });
+    try {
+      const response = await fetch("http://127.0.0.1:8000/analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: 1,
+          question: question,
+        }),
+      });
 
-//       // const data = await response.json();
-//       // setResult(data)
-//       console.log("Status:", response.status);
+      const data = await response.json();
 
-// const data = await response.json();
+      console.log("Response:", data);
 
-// console.log("Response:", data);
+      setResult(data);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to connect to backend.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-// setResult(data);
-// console.log("Result set:");
-//     } catch (error) {
-//       console.error(error);
-//       alert(error.message);
-//     }
+  const chartData = result
+    ? [
+        {
+          agent: "Fact",
+          score: result.fact_score,
+        },
+        {
+          agent: "Logic",
+          score: result.logic_score,
+        },
+        {
+          agent: "Evidence",
+          score: result.evidence_score,
+        },
+        {
+          agent: "Hallucination",
+          score: 100 - result.hallucination_score,
+        },
+      ]
+    : [];
 
-//     setLoading(false);
-//   };
-const analyzeResponse = async () => {
-  setLoading(true);
+  return (
+    <div className="dashboard">
 
-  try {
-    const response = await fetch("http://127.0.0.1:8000/analyze", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: 1,
-        question,
-      }),
-    });
+      <div className="dashboard-header">
+        <h1>🤖 Multi-Agent Hallucination Detector</h1>
+        <p>Trust Score Engine for Reliable AI Responses</p>
+      </div>
 
-    console.log("Status:", response.status);
+      <div className="question-card">
 
-    const data = await response.json();
-    // console.log("DATA:", data);
-    console.log("DATA:", JSON.stringify(data, null, 2));
+        <textarea
+          placeholder="Ask any question..."
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+        />
 
-    setResult(data);
-  } catch (err) {
-    console.error(err);
-  } finally {
-    setLoading(false);
-  }
-};
-const chartData = result
-  ? [
-      { agent: "Fact", score: result.fact_score },
-      { agent: "Logic", score: result.logic_score },
-      { agent: "Evidence", score: result.evidence_score },
-      { agent: "Hallucination", score: result.hallucination_score },
-    ]
-  : [];
-//   return (
-//     <div className="dashboard">
+        <button onClick={analyzeResponse}>
+          {loading ? "Analyzing..." : "Analyze"}
+        </button>
 
-//       <div className="dashboard-header">
-//         <h1>🤖 Multi-Agent Hallucination Detector</h1>
-//         <p>Trust Score Engine for Reliable AI Responses</p>
-//       </div>
+      </div>
 
-//       <div className="question-card">
+      {result && (
+        <>
 
-//         <textarea
-//           placeholder="Ask any question..."
-//           value={question}
-//           onChange={(e) => setQuestion(e.target.value)}
-//         />
+          {/* Trust Score */}
 
-//         <button onClick={analyzeResponse}>
-//           {loading ? "Analyzing..." : "Analyze"}
-//         </button>
+          <div className="score-section">
 
-//       </div>
+            <CircularScore
+              title="Trust Score"
+              value={result.trust_score}
+            />
 
-//       {result && (
+            <div className="score-grid">
 
-//         <>
+              <div className="card">
+                <h3>Fact Score</h3>
+                <h2>{result.fact_score}</h2>
+              </div>
 
-//           <div className="score-section">
+              <div className="card">
+                <h3>Logic Score</h3>
+                <h2>{result.logic_score}</h2>
+              </div>
 
-//             <CircularScore
-//               title="Trust Score"
-//               value={result.trust_score}
-//             />
+              <div className="card">
+                <h3>Evidence Score</h3>
+                <h2>{result.evidence_score}</h2>
+              </div>
 
-//             <div className="score-grid">
+              <div className="card">
+                <h3>Hallucination</h3>
+                <h2>{result.hallucination_score}</h2>
+              </div>
 
-//               <div className="card">
-//                 <h3>Fact Score</h3>
-//                 <h2>{result.fact_score}</h2>
-//               </div>
-
-//               <div className="card">
-//                 <h3>Logic Score</h3>
-//                 <h2>{result.logic_score}</h2>
-//               </div>
-
-//               <div className="card">
-//                 <h3>Evidence Score</h3>
-//                 <h2>{result.evidence_score}</h2>
-//               </div>
-
-//               <div className="card">
-//                 <h3>Hallucination</h3>
-//                 <h2>{result.hallucination_score}</h2>
-//               </div>
-
-//             </div>
-
-//           </div>
-
-//           <div className="response-card">
-
-//             <h2>AI Response</h2>
-
-//             <p>{result.ai_response}</p>
-
-//             <h3>
-//               Trust Level :
-//               <span> {result.trust_level}</span>
-//             </h3>
-
-//           </div>
-
-//         </>
-
-//       )}
-
-//     </div>
-  
-//       <div className="chart-card">
-//       <h2>Agent Performance</h2>
-
-//      <ResponsiveContainer width="100%" height={300}>
-//     <BarChart data={chartData}>
-//       <CartesianGrid strokeDasharray="3 3" />
-//       <XAxis dataKey="agent" />
-//       <YAxis domain={[0, 100]} />
-//       <Tooltip />
-//       <Bar dataKey="score" />
-//       </BarChart>
-//        </ResponsiveContainer>
-//     </div>
-//   );
-// }
-
-// export default Dashboard;
-return (
-  <div className="dashboard">
-
-    <div className="dashboard-header">
-      <h1>🤖 Multi-Agent Hallucination Detector</h1>
-      <p>Trust Score Engine for Reliable AI Responses</p>
-    </div>
-
-    <div className="question-card">
-      <textarea
-        placeholder="Ask any question..."
-        value={question}
-        onChange={(e) => setQuestion(e.target.value)}
-      />
-
-      <button onClick={analyzeResponse}>
-        {loading ? "Analyzing..." : "Analyze"}
-      </button>
-    </div>
-
-    {result && (
-      <>
-        {/* Score Section */}
-        <pre>{JSON.stringify(result, null, 2)}</pre>
-        <div className="score-section">
-
-          <CircularScore
-            title="Trust Score"
-            value={result.trust_score}
-          />
-
-          <div className="score-grid">
-
-            <div className="card">
-              <h3>Fact Score</h3>
-              <h2>{result.fact_score}</h2>
-            </div>
-
-            <div className="card">
-              <h3>Logic Score</h3>
-              <h2>{result.logic_score}</h2>
-            </div>
-
-            <div className="card">
-              <h3>Evidence Score</h3>
-              <h2>{result.evidence_score}</h2>
-            </div>
-
-            <div className="card">
-              <h3>Hallucination Score</h3>
-              <h2>{result.hallucination_score}</h2>
             </div>
 
           </div>
-        </div>
 
-        {/* AI Response */}
-        <div className="response-card">
+          {/* AI Response */}
 
-          <h2>AI Response</h2>
+          <div className="response-card">
 
-          <p>{result.response}</p>
+            <h2>Question</h2>
 
-          <h3>
-            Trust Level :
-            <span> {result.trust_level}</span>
-          </h3>
+            <p>{result.question}</p>
 
-        </div>
+            <h2>AI Response</h2>
 
-        {/* Agent Performance Chart */}
+            {/* <p>{result.ai_response}</p> */}
+            <div className="markdown-response">
+  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+    {result.ai_response}
+  </ReactMarkdown>
+</div>
 
-        <div className="chart-card">
+            <h3>
+              Trust Level :
+              <span> {result.trust_level}</span>
+            </h3>
 
-          <h2>Agent Performance</h2>
+          </div>          {/* Analysis Report */}
 
-          <ResponsiveContainer width="100%" height={300}>
+          <div className="response-card">
 
-            <BarChart data={chartData}>
+            <h2>Analysis Report</h2>
 
-              <CartesianGrid strokeDasharray="3 3" />
+            <div className="analysis-item">
+              <h3>✅ Fact Check</h3>
+              <p>{result.fact_message}</p>
+            </div>
 
-              <XAxis dataKey="agent" />
+            <div className="analysis-item">
+              <h3>🧠 Logic Analysis</h3>
+              <p>{result.logic_message}</p>
+            </div>
 
-              <YAxis domain={[0, 100]} />
+            <div className="analysis-item">
+              <h3>📚 Evidence Analysis</h3>
+              <p>{result.evidence_message}</p>
+            </div>
 
-              <Tooltip />
+            <div className="analysis-item">
+              <h3>🚨 Hallucination Analysis</h3>
+              <p>{result.hallucination_message}</p>
+            </div>
 
-              <Bar dataKey="score" />
+          </div>
 
-            </BarChart>
+          {/* Agent Performance Chart */}
 
-          </ResponsiveContainer>
+          <div className="chart-card">
 
-        </div>
+            <h2>Agent Performance</h2>
 
-      </>
-    )}
+            <ResponsiveContainer width="100%" height={350}>
 
-  </div>
-);
+              <BarChart data={chartData}>
+
+                <CartesianGrid strokeDasharray="3 3" />
+
+                <XAxis dataKey="agent" />
+
+                <YAxis domain={[0, 100]} />
+
+                <Tooltip />
+
+                <Bar
+                  dataKey="score"
+                  radius={[8, 8, 0, 0]}
+                />
+
+              </BarChart>
+
+            </ResponsiveContainer>
+
+          </div>
+
+        </>
+      )}
+
+    </div>
+  );
 }
 
 export default Dashboard;
