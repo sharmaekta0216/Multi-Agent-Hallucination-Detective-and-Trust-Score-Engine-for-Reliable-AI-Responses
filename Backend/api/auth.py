@@ -16,7 +16,6 @@ router = APIRouter()
 class SignupRequest(BaseModel):
     full_name: str
     email: str
-    phone_number: str
     password: str
 
 
@@ -49,7 +48,6 @@ def signup(request: SignupRequest):
     create_user(
         request.full_name,
         request.email,
-        request.phone_number,
         password_hash
     )
 

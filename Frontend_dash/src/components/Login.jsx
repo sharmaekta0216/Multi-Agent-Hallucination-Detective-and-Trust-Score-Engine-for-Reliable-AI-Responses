@@ -45,11 +45,45 @@ function Login({ setPage }) {
 
 export default Login;*/
 import "../Styles/Login.css";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
 
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+    localStorage.setItem("user_id", data.user_id);
+    localStorage.setItem("name", data.name);
+
+    alert("Login Successful!");
+    window.location.href = "/dashboard";
+} else {
+        alert(data.detail);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Backend connection failed.");
+    }
+  };
 
   return (
     <div className="login-page">
@@ -68,9 +102,10 @@ function Login() {
           <input
             type="email"
             placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-
 
         <div className="input-group">
           <label>Password</label>
@@ -78,12 +113,14 @@ function Login() {
           <input
             type="password"
             placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
         <button
           className="login-btn"
-          onClick={() => navigate("/dashboard")}
+          onClick={handleLogin}
         >
           Login
         </button>

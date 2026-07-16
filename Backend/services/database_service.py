@@ -6,22 +6,22 @@ print(get_connection)
 # USER OPERATIONS
 # -----------------------------
 
-def create_user(full_name, email, phone_number, password_hash):
+def create_user(full_name, email, password_hash):
     conn = get_connection()
     cursor = conn.cursor()
 
     sql = """
     INSERT INTO users
-    (full_name, email, phone_number, password_hash)
-    VALUES (%s, %s, %s, %s)
+    (full_name, email, password_hash)
+    VALUES (%s, %s, %s)
     """
 
-    cursor.execute(sql, (full_name, email, phone_number, password_hash))
+    cursor.execute(sql, (full_name, email, password_hash))
+
     conn.commit()
 
     cursor.close()
     conn.close()
-
 
 def get_user_by_email(email):
     conn = get_connection()

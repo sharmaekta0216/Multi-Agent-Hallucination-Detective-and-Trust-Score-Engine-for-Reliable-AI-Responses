@@ -180,7 +180,7 @@ export default App; */
 
 
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -197,13 +197,17 @@ import History from "./components/History";
 import "./Styles/App.css";
 
 function App() {
+  const user = localStorage.getItem("user_id");
   return (
     <BrowserRouter>
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Signup />} />
+        <Route
+        path="/dashboard"
+        element={user ? <Dashboard /> : <Navigate to="/login" />}
+        />
         <Route path="/charts" element={<Charts />} />
         <Route path="/team" element={<Team />} />
         <Route path="/about" element={<About />} />
