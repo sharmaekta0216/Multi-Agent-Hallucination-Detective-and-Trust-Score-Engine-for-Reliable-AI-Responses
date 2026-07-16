@@ -673,7 +673,8 @@ const analyzeResponse = async () => {
     console.log("Status:", response.status);
 
     const data = await response.json();
-    console.log("DATA:", data);
+    // console.log("DATA:", data);
+    console.log("DATA:", JSON.stringify(data, null, 2));
 
     setResult(data);
   } catch (err) {
@@ -808,6 +809,7 @@ return (
     {result && (
       <>
         {/* Score Section */}
+        <pre>{JSON.stringify(result, null, 2)}</pre>
         <div className="score-section">
 
           <CircularScore
@@ -845,7 +847,7 @@ return (
 
           <h2>AI Response</h2>
 
-          <p>{result.ai_response}</p>
+          <p>{result.response}</p>
 
           <h3>
             Trust Level :
