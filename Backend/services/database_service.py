@@ -1,3 +1,8 @@
+# from database import get_connection
+import database
+
+print("Database module path:", database.__file__)
+
 from database import get_connection
 print("Database service module loaded successfully:",
 get_connection.__module__)
