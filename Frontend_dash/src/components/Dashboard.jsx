@@ -573,34 +573,19 @@
 
 // export default Dashboard;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+// import {
+//   BarChart,
+//   Bar,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   ResponsiveContainer,
+// } from "recharts";
 import {
   BarChart,
   Bar,
+  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -639,7 +624,7 @@ function Dashboard() {
 
       const data = await response.json();
 
-      console.log("Response:", data);
+      console.log(data);
 
       setResult(data);
     } catch (error) {
@@ -665,12 +650,17 @@ function Dashboard() {
           score: result.evidence_score,
         },
         {
-          agent: "Hallucination",
+          agent: "Reliability",
           score: 100 - result.hallucination_score,
         },
       ]
     : [];
-
+const colors = [
+  "#22C55E", // Fact - Green
+  "#3B82F6", // Logic - Blue
+  "#F59E0B", // Evidence - Orange
+  "#EF4444", // Hallucination - Red
+];
   return (
     <div className="dashboard">
 
@@ -723,7 +713,7 @@ function Dashboard() {
               </div>
 
               <div className="card">
-                <h3>Hallucination</h3>
+                <h3>Hallucination Score</h3>
                 <h2>{result.hallucination_score}</h2>
               </div>
 
@@ -741,19 +731,25 @@ function Dashboard() {
 
             <h2>AI Response</h2>
 
-            {/* <p>{result.ai_response}</p> */}
-            <div className="markdown-response">
-  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-    {result.ai_response}
-  </ReactMarkdown>
-</div>
+            <div
+              className="markdown-response"
+              style={{
+                whiteSpace: "pre-wrap",
+                lineHeight: "1.8",
+                fontSize: "17px",
+              }}
+            >
+              {result.ai_response}
+            </div>
 
             <h3>
               Trust Level :
               <span> {result.trust_level}</span>
             </h3>
 
-          </div>          {/* Analysis Report */}
+          </div>
+
+          {/* Analysis Report */}
 
           <div className="response-card">
 
@@ -781,7 +777,7 @@ function Dashboard() {
 
           </div>
 
-          {/* Agent Performance Chart */}
+          {/* Agent Performance */}
 
           <div className="chart-card">
 
@@ -799,10 +795,20 @@ function Dashboard() {
 
                 <Tooltip />
 
-                <Bar
+                {<Bar
+  dataKey="score"
+  radius={[8, 8, 0, 0]}
+>
+  {chartData.map((entry, index) => (
+    <Cell
+      key={index}
+      fill={colors[index]}
+    />
+  ))}
+</Bar>/* <Bar
                   dataKey="score"
                   radius={[8, 8, 0, 0]}
-                />
+                /> */}
 
               </BarChart>
 
@@ -818,3 +824,23 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

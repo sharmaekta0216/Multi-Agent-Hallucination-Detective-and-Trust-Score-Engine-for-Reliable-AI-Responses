@@ -504,6 +504,8 @@ def run_workflow(user_id, query):
     response = response_agent.generate_response(query)
 
     ai_response = response["response"]
+    if "error" in response:
+     print("Response Agent Error:", response["error"]) 
 
     print("AI Response Generated")
 

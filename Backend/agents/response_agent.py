@@ -279,6 +279,75 @@
 #                 "error": str(e)
 
 #             }
+# from backend.api import query
+# from services.gemini_service import get_gemini_response
+
+
+# class ResponseAgent:
+
+#     def __init__(self):
+#         print("Response Agent Initialized")
+
+#     def generate_response(self, query):
+
+# #         prompt = f"""
+# # You are a professional AI assistant.
+
+# # Answer the following question in a clean and well-formatted Markdown style.
+
+# # Question:
+# # {query}
+
+# # Instructions:
+# # - Give a direct answer first.
+# # - Use Markdown headings (## and ###).
+# # - Use bullet points where appropriate.
+# # - Highlight important terms using **bold**.
+# # - Keep the answer easy to understand.
+# # - Keep paragraphs short.
+# # - Do NOT return JSON.
+# # - Do NOT mention these instructions.
+# # - If the answer contains facts, explain them briefly.
+# # """
+# prompt = f"""
+# You are a professional AI assistant.
+
+# Answer the user's question in plain English.
+
+# Rules:
+# - Do NOT use Markdown.
+# - Do NOT use ## or ### headings.
+# - Do NOT use ** or * characters.
+# - Do NOT use --- separators.
+# - Write naturally like ChatGPT.
+# - Use short paragraphs.
+# - Use numbered lists only when necessary.
+# - Keep the answer easy to read.
+# - Be concise but complete.
+# - Return only the answer.
+
+# Question:
+# {query}
+# """
+
+# try:
+
+#             print("\n========== RESPONSE AGENT ==========")
+
+#             answer = get_gemini_response(prompt)
+
+#             return {
+#                 "query": query,
+#                 "response": answer
+#             }
+
+#         except Exception as e:
+
+#             return {
+#                 "query": query,
+#                 "response": "Unable to generate response.",
+#                 "error": str(e)
+#             }
 from services.gemini_service import get_gemini_response
 
 
@@ -290,28 +359,33 @@ class ResponseAgent:
     def generate_response(self, query):
 
         prompt = f"""
-You are a professional AI assistant.
+You are an expert AI assistant.
 
-Answer the following question in a clean and well-formatted Markdown style.
+Answer the user's question naturally.
+
+Requirements:
+
+- Give the direct answer first.
+- Write in plain English.
+- Do NOT use Markdown.
+- Do NOT use #, ##, ### headings.
+- Do NOT use **, *, or --- symbols.
+- Use short paragraphs.
+- Use numbered lists only if they improve readability.
+- Explain important facts briefly.
+- Keep the answer professional, user-friendly, and easy to understand.
+- Do NOT return JSON.
+- Do NOT include code unless requested.
+- Return only the final answer.
 
 Question:
 {query}
-
-Instructions:
-- Give a direct answer first.
-- Use Markdown headings (## and ###).
-- Use bullet points where appropriate.
-- Highlight important terms using **bold**.
-- Keep the answer easy to understand.
-- Keep paragraphs short.
-- Do NOT return JSON.
-- Do NOT mention these instructions.
-- If the answer contains facts, explain them briefly.
 """
 
         try:
 
             print("\n========== RESPONSE AGENT ==========")
+            print(prompt)
 
             answer = get_gemini_response(prompt)
 
@@ -321,6 +395,9 @@ Instructions:
             }
 
         except Exception as e:
+
+            print("\n========== RESPONSE AGENT ERROR ==========")
+            print(str(e))
 
             return {
                 "query": query,
