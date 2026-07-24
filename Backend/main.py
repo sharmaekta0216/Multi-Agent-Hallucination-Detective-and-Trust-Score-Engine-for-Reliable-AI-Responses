@@ -338,6 +338,115 @@
 #             "success": True,
 #             "result": result
 #         }
+# from fastapi import FastAPI
+# from fastapi.middleware.cors import CORSMiddleware
+# from pydantic import BaseModel
+
+# from agents.workflow import run_workflow
+# from api.auth import router as auth_router
+# from services.database_service import get_user_history
+
+# app = FastAPI(
+#     title="Multi-Agent Hallucination Detection API",
+#     version="1.0.0"
+# )
+
+# # Authentication routes
+# app.include_router(auth_router)
+
+# # CORS
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=[
+#         "http://localhost:5173",
+#         "http://localhost:5174",
+#         "http://localhost:5175",
+#         "http://localhost:5176",
+#         "http://localhost:5177",
+#         "http://localhost:5178",
+#         "http://127.0.0.1:5173"
+#     ],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+
+# # -----------------------------
+# # Request Model
+# # -----------------------------
+# class QueryRequest(BaseModel):
+#     user_id: int
+#     question: str
+
+
+# # -----------------------------
+# # Home API
+# # -----------------------------
+# @app.get("/")
+# def home():
+#     return {
+#         "success": True,
+#         "message": "Backend is running successfully!"
+#     }
+
+
+# # -----------------------------
+# # Analyze API
+# # -----------------------------
+# @app.post("/analyze")
+# def analyze(request: QueryRequest):
+#     print("Request received:", request.question)
+#     try:
+#         print("Request received:")
+#         result = run_workflow(
+#             request.user_id,
+#             request.question
+#         )
+#         print("Workflow completed",result)
+#         return result
+    
+#     except Exception as e:
+#         return {
+#             "success": False,
+#             "error": str(e)
+#         }
+# #-----------------------------
+# # User History API
+# # -----------------------------
+# @app.get("/history/{user_id}")
+# def get_history(user_id: int):
+#     try:
+#         history = get_user_history(user_id)
+
+#         return {
+#             "success": True,
+#             "history": history
+#         }
+
+#     # except Exception as e:
+#     #     return {
+#     #         "success": False,
+#     #         "error": str(e)
+#     #     }
+#  except Exception as e:
+
+#      print("API ERROR:", e)
+
+#      return {
+#         "success": False,
+#         "error": str(e),
+#         "fact_score":0,
+#         "logic_score":0,
+#         "evidence_score":0,
+#         "hallucination_score":100,
+#         "adversarial_score":0,
+#         "trust_score":0,
+#         "trust_level":"Failed",
+#         "judge_decision":"Unable to evaluate",
+#         "explanation":str(e),
+#         "recommendation":"Check backend logs"
+#     }
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -346,17 +455,28 @@ from agents.workflow import run_workflow
 from api.auth import router as auth_router
 from services.database_service import get_user_history
 
+
 app = FastAPI(
     title="Multi-Agent Hallucination Detection API",
     version="1.0.0"
 )
 
-# Authentication routes
+
+# =============================
+# Authentication Routes
+# =============================
+
 app.include_router(auth_router)
 
-# CORS
+
+
+# =============================
+# CORS Configuration
+# =============================
+
 app.add_middleware(
     CORSMiddleware,
+
     allow_origins=[
         "http://localhost:5173",
         "http://localhost:5174",
@@ -364,68 +484,164 @@ app.add_middleware(
         "http://localhost:5176",
         "http://localhost:5177",
         "http://localhost:5178",
-        "http://127.0.0.1:5173"
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
+        "http://127.0.0.1:5175",
+        "http://127.0.0.1:5176",
+        "http://127.0.0.1:5177",
+        "http://127.0.0.1:5178"
     ],
+
     allow_credentials=True,
+
     allow_methods=["*"],
+
     allow_headers=["*"],
 )
 
 
-# -----------------------------
+
+# =============================
 # Request Model
-# -----------------------------
+# =============================
+
 class QueryRequest(BaseModel):
+
     user_id: int
+
     question: str
 
 
-# -----------------------------
+
+
+
+# =============================
 # Home API
-# -----------------------------
+# =============================
+
 @app.get("/")
 def home():
+
     return {
+
         "success": True,
+
         "message": "Backend is running successfully!"
+
     }
 
 
-# -----------------------------
+
+
+# =============================
 # Analyze API
-# -----------------------------
+# =============================
+
 @app.post("/analyze")
 def analyze(request: QueryRequest):
-    print("Request received:", request.question)
+
+    print("\n========== NEW REQUEST ==========")
+
+    print("Question:", request.question)
+
+
     try:
-        print("Request received:")
+
         result = run_workflow(
+
             request.user_id,
+
             request.question
+
         )
-        print("Workflow completed",result)
+
+
+        print("Workflow Completed Successfully")
+
         return result
-    
+
+
+
     except Exception as e:
+
+
+        print("WORKFLOW ERROR:", e)
+
+
         return {
+
             "success": False,
-            "error": str(e)
+
+            "error": str(e),
+
+
+            # Default values for frontend safety
+
+            "question": request.question,
+
+            "ai_response": "Unable to generate response",
+
+
+            "fact_score": 0,
+
+            "logic_score": 0,
+
+            "evidence_score": 0,
+
+            "hallucination_score": 100,
+
+            "adversarial_score": 0,
+
+
+            "trust_score": 0,
+
+            "trust_level": "Failed",
+
+
+            "judge_decision": "Evaluation Failed",
+
+            "explanation": str(e),
+
+            "recommendation": "Check backend logs"
+
         }
-#-----------------------------
+
+
+
+
+
+# =============================
 # User History API
-# -----------------------------
+# =============================
+
 @app.get("/history/{user_id}")
 def get_history(user_id: int):
+
     try:
+
         history = get_user_history(user_id)
 
+
         return {
+
             "success": True,
+
             "history": history
+
         }
 
+
+
     except Exception as e:
+
+
+        print("History Error:", e)
+
+
         return {
+
             "success": False,
+
             "error": str(e)
+
         }

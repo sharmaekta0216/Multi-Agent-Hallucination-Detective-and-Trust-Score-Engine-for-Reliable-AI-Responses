@@ -582,6 +582,251 @@
 //   Tooltip,
 //   ResponsiveContainer,
 // } from "recharts";
+// import {
+//   BarChart,
+//   Bar,
+//   Cell,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   ResponsiveContainer,
+// } from "recharts";
+
+// import { useState } from "react";
+// import "../Styles/Dashboard.css";
+// import CircularScore from "./CircularScore";
+
+// function Dashboard() {
+//   const [question, setQuestion] = useState("");
+//   const [loading, setLoading] = useState(false);
+//   const [result, setResult] = useState(null);
+
+//   const analyzeResponse = async () => {
+//     if (!question.trim()) {
+//       alert("Please enter a question.");
+//       return;
+//     }
+
+//     setLoading(true);
+
+//     try {
+//       const response = await fetch("http://127.0.0.1:8000/analyze", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           user_id: 1,
+//           question: question,
+//         }),
+//       });
+
+//       const data = await response.json();
+
+//       console.log(data);
+
+//       setResult(data);
+//     } catch (error) {
+//       console.error(error);
+//       alert("Failed to connect to backend.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const chartData = result
+//     ? [
+//         {
+//           agent: "Fact",
+//           score: result.fact_score,
+//         },
+//         {
+//           agent: "Logic",
+//           score: result.logic_score,
+//         },
+//         {
+//           agent: "Evidence",
+//           score: result.evidence_score,
+//         },
+//         {
+//           agent: "Reliability",
+//           score: 100 - result.hallucination_score,
+//         },
+//       ]
+//     : [];
+// const colors = [
+//   "#22C55E", // Fact - Green
+//   "#3B82F6", // Logic - Blue
+//   "#F59E0B", // Evidence - Orange
+//   "#EF4444", // Hallucination - Red
+// ];
+//   return (
+//     <div className="dashboard">
+
+//       <div className="dashboard-header">
+//         <h1>🤖 Multi-Agent Hallucination Detector</h1>
+//         <p>Trust Score Engine for Reliable AI Responses</p>
+//       </div>
+
+//       <div className="question-card">
+
+//         <textarea
+//           placeholder="Ask any question..."
+//           value={question}
+//           onChange={(e) => setQuestion(e.target.value)}
+//         />
+
+//         <button onClick={analyzeResponse}>
+//           {loading ? "Analyzing..." : "Analyze"}
+//         </button>
+
+//       </div>
+
+//       {result && (
+//         <>
+
+//           {/* Trust Score */}
+
+//           <div className="score-section">
+
+//             <CircularScore
+//               title="Trust Score"
+//               value={result.trust_score}
+//             />
+
+//             <div className="score-grid">
+
+//               <div className="card">
+//                 <h3>Fact Score</h3>
+//                 <h2>{result.fact_score}</h2>
+//               </div>
+
+//               <div className="card">
+//                 <h3>Logic Score</h3>
+//                 <h2>{result.logic_score}</h2>
+//               </div>
+
+//               <div className="card">
+//                 <h3>Evidence Score</h3>
+//                 <h2>{result.evidence_score}</h2>
+//               </div>
+
+//               <div className="card">
+//                 <h3>Hallucination Score</h3>
+//                 <h2>{result.hallucination_score}</h2>
+//               </div>
+
+//             </div>
+
+//           </div>
+
+//           {/* AI Response */}
+
+//           <div className="response-card">
+
+//             <h2>Question</h2>
+
+//             <p>{result.question}</p>
+
+//             <h2>AI Response</h2>
+
+//             <div
+//               className="markdown-response"
+//               style={{
+//                 whiteSpace: "pre-wrap",
+//                 lineHeight: "1.8",
+//                 fontSize: "17px",
+//               }}
+//             >
+//               {result.ai_response}
+//             </div>
+
+//             <h3>
+//               Trust Level :
+//               <span> {result.trust_level}</span>
+//             </h3>
+
+//           </div>
+
+//           {/* Analysis Report */}
+
+//           <div className="response-card">
+
+//             <h2>Analysis Report</h2>
+
+//             <div className="analysis-item">
+//               <h3>✅ Fact Check</h3>
+//               <p>{result.fact_message}</p>
+//             </div>
+
+//             <div className="analysis-item">
+//               <h3>🧠 Logic Analysis</h3>
+//               <p>{result.logic_message}</p>
+//             </div>
+
+//             <div className="analysis-item">
+//               <h3>📚 Evidence Analysis</h3>
+//               <p>{result.evidence_message}</p>
+//             </div>
+
+//             <div className="analysis-item">
+//               <h3>🚨 Hallucination Analysis</h3>
+//               <p>{result.hallucination_message}</p>
+//             </div>
+
+//           </div>
+
+//           {/* Agent Performance */}
+
+//           <div className="chart-card">
+
+//             <h2>Agent Performance</h2>
+
+//             <ResponsiveContainer width="100%" height={350}>
+
+//               <BarChart data={chartData}>
+
+//                 <CartesianGrid strokeDasharray="3 3" />
+
+//                 <XAxis dataKey="agent" />
+
+//                 <YAxis domain={[0, 100]} />
+
+//                 <Tooltip />
+
+//                 {<Bar
+//   dataKey="score"
+//   radius={[8, 8, 0, 0]}
+// >
+//   {chartData.map((entry, index) => (
+//     <Cell
+//       key={index}
+//       fill={colors[index]}
+//     />
+//   ))}
+// </Bar>/* <Bar
+//                   dataKey="score"
+//                   radius={[8, 8, 0, 0]}
+//                 /> */}
+
+//               </BarChart>
+
+//             </ResponsiveContainer>
+
+//           </div>
+
+//         </>
+//       )}
+
+//     </div>
+//   );
+// }
+
+// export default Dashboard;
+
+
+
 import {
   BarChart,
   Bar,
@@ -597,237 +842,546 @@ import { useState } from "react";
 import "../Styles/Dashboard.css";
 import CircularScore from "./CircularScore";
 
+
 function Dashboard() {
+
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
 
+
   const analyzeResponse = async () => {
+
     if (!question.trim()) {
       alert("Please enter a question.");
       return;
     }
 
+
     setLoading(true);
 
+
     try {
-      const response = await fetch("http://127.0.0.1:8000/analyze", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: 1,
-          question: question,
-        }),
-      });
+
+      const response = await fetch(
+        "http://127.0.0.1:8000/analyze",
+        {
+          method: "POST",
+
+          headers:{
+            "Content-Type":"application/json",
+          },
+
+          body: JSON.stringify({
+            user_id:1,
+            question:question,
+          }),
+        }
+      );
+
 
       const data = await response.json();
 
       console.log(data);
 
       setResult(data);
-    } catch (error) {
+
+
+    } catch(error){
+
       console.error(error);
+
       alert("Failed to connect to backend.");
-    } finally {
-      setLoading(false);
+
     }
+    finally{
+
+      setLoading(false);
+
+    }
+
   };
 
+
+
   const chartData = result
-    ? [
-        {
-          agent: "Fact",
-          score: result.fact_score,
-        },
-        {
-          agent: "Logic",
-          score: result.logic_score,
-        },
-        {
-          agent: "Evidence",
-          score: result.evidence_score,
-        },
-        {
-          agent: "Reliability",
-          score: 100 - result.hallucination_score,
-        },
-      ]
-    : [];
-const colors = [
-  "#22C55E", // Fact - Green
-  "#3B82F6", // Logic - Blue
-  "#F59E0B", // Evidence - Orange
-  "#EF4444", // Hallucination - Red
+  ? [
+
+    {
+      agent:"Fact",
+      score:result.fact_score
+    },
+
+    {
+      agent:"Logic",
+      score:result.logic_score
+    },
+
+    {
+      agent:"Evidence",
+      score:result.evidence_score
+    },
+
+    {
+      agent:"Reliability",
+      score:100-result.hallucination_score
+    },
+
+    {
+      agent:"Adversarial",
+      score:result.adversarial_score
+    }
+
+  ]
+  : [];
+
+
+
+const colors=[
+
+ "#22C55E",
+ "#3B82F6",
+ "#F59E0B",
+ "#EF4444",
+ "#8B5CF6"
+
 ];
-  return (
-    <div className="dashboard">
 
-      <div className="dashboard-header">
-        <h1>🤖 Multi-Agent Hallucination Detector</h1>
-        <p>Trust Score Engine for Reliable AI Responses</p>
-      </div>
 
-      <div className="question-card">
 
-        <textarea
-          placeholder="Ask any question..."
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-        />
+return (
 
-        <button onClick={analyzeResponse}>
-          {loading ? "Analyzing..." : "Analyze"}
-        </button>
+<div className="dashboard">
 
-      </div>
 
-      {result && (
-        <>
+<div className="dashboard-header">
 
-          {/* Trust Score */}
+<h1>
+🤖 Multi-Agent Hallucination Detector
+</h1>
 
-          <div className="score-section">
+<p>
+Trust Score Engine for Reliable AI Responses
+</p>
 
-            <CircularScore
-              title="Trust Score"
-              value={result.trust_score}
-            />
+</div>
 
-            <div className="score-grid">
 
-              <div className="card">
-                <h3>Fact Score</h3>
-                <h2>{result.fact_score}</h2>
-              </div>
 
-              <div className="card">
-                <h3>Logic Score</h3>
-                <h2>{result.logic_score}</h2>
-              </div>
+<div className="question-card">
 
-              <div className="card">
-                <h3>Evidence Score</h3>
-                <h2>{result.evidence_score}</h2>
-              </div>
 
-              <div className="card">
-                <h3>Hallucination Score</h3>
-                <h2>{result.hallucination_score}</h2>
-              </div>
+<textarea
 
-            </div>
+placeholder="Ask any question..."
 
-          </div>
+value={question}
 
-          {/* AI Response */}
+onChange={(e)=>setQuestion(e.target.value)}
 
-          <div className="response-card">
+/>
 
-            <h2>Question</h2>
 
-            <p>{result.question}</p>
+<button onClick={analyzeResponse}>
 
-            <h2>AI Response</h2>
-
-            <div
-              className="markdown-response"
-              style={{
-                whiteSpace: "pre-wrap",
-                lineHeight: "1.8",
-                fontSize: "17px",
-              }}
-            >
-              {result.ai_response}
-            </div>
-
-            <h3>
-              Trust Level :
-              <span> {result.trust_level}</span>
-            </h3>
-
-          </div>
-
-          {/* Analysis Report */}
-
-          <div className="response-card">
-
-            <h2>Analysis Report</h2>
-
-            <div className="analysis-item">
-              <h3>✅ Fact Check</h3>
-              <p>{result.fact_message}</p>
-            </div>
-
-            <div className="analysis-item">
-              <h3>🧠 Logic Analysis</h3>
-              <p>{result.logic_message}</p>
-            </div>
-
-            <div className="analysis-item">
-              <h3>📚 Evidence Analysis</h3>
-              <p>{result.evidence_message}</p>
-            </div>
-
-            <div className="analysis-item">
-              <h3>🚨 Hallucination Analysis</h3>
-              <p>{result.hallucination_message}</p>
-            </div>
-
-          </div>
-
-          {/* Agent Performance */}
-
-          <div className="chart-card">
-
-            <h2>Agent Performance</h2>
-
-            <ResponsiveContainer width="100%" height={350}>
-
-              <BarChart data={chartData}>
-
-                <CartesianGrid strokeDasharray="3 3" />
-
-                <XAxis dataKey="agent" />
-
-                <YAxis domain={[0, 100]} />
-
-                <Tooltip />
-
-                {<Bar
-  dataKey="score"
-  radius={[8, 8, 0, 0]}
->
-  {chartData.map((entry, index) => (
-    <Cell
-      key={index}
-      fill={colors[index]}
-    />
-  ))}
-</Bar>/* <Bar
-                  dataKey="score"
-                  radius={[8, 8, 0, 0]}
-                /> */}
-
-              </BarChart>
-
-            </ResponsiveContainer>
-
-          </div>
-
-        </>
-      )}
-
-    </div>
-  );
+{
+loading 
+?
+"Analyzing..."
+:
+"Analyze"
 }
 
+</button>
+
+
+</div>
+
+
+
+
+{result && (
+
+<>
+
+
+{/* TRUST SCORE */}
+
+
+<div className="score-section">
+
+
+<CircularScore
+
+title="Trust Score"
+
+value={result.trust_score}
+
+/>
+
+
+
+<div className="score-grid">
+
+
+<div className="card">
+
+<h3>Fact Score</h3>
+
+<h2>{result.fact_score}</h2>
+
+</div>
+
+
+
+<div className="card">
+
+<h3>Logic Score</h3>
+
+<h2>{result.logic_score}</h2>
+
+</div>
+
+
+
+<div className="card">
+
+<h3>Evidence Score</h3>
+
+<h2>{result.evidence_score}</h2>
+
+</div>
+
+
+
+
+<div className="card">
+
+<h3>Hallucination</h3>
+
+<h2>{result.hallucination_score}</h2>
+
+</div>
+
+
+
+<div className="card">
+
+<h3>Adversarial</h3>
+
+<h2>{result.adversarial_score}</h2>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+{/* RESPONSE */}
+
+
+
+<div className="response-card">
+
+
+<h2>Question</h2>
+
+<p>{result.question}</p>
+
+
+
+<h2>AI Response</h2>
+
+
+<div
+
+className="markdown-response"
+
+style={{
+
+whiteSpace:"pre-wrap",
+
+lineHeight:"1.8",
+
+fontSize:"17px"
+
+}}
+
+>
+
+{result.ai_response}
+
+</div>
+
+
+
+
+<h3>
+
+Trust Level :
+
+<span>
+ {result.trust_level}
+</span>
+
+</h3>
+
+
+</div>
+
+
+
+
+
+
+{/* ANALYSIS REPORT */}
+
+
+
+<div className="response-card">
+
+
+<h2>
+Analysis Report
+</h2>
+
+
+
+<div className="analysis-item">
+
+<h3>
+✅ Fact Check
+</h3>
+
+<p>
+{result.fact_message}
+</p>
+
+</div>
+
+
+
+
+<div className="analysis-item">
+
+<h3>
+🧠 Logic Analysis
+</h3>
+
+<p>
+{result.logic_message}
+</p>
+
+</div>
+
+
+
+
+<div className="analysis-item">
+
+<h3>
+📚 Evidence Analysis
+</h3>
+
+<p>
+{result.evidence_message}
+</p>
+
+</div>
+
+
+
+
+<div className="analysis-item">
+
+<h3>
+🚨 Hallucination Analysis
+</h3>
+
+<p>
+{result.hallucination_message}
+</p>
+
+</div>
+
+
+
+
+<div className="analysis-item">
+
+<h3>
+⚔️ Adversarial Review
+</h3>
+
+<p>
+{result.adversarial_issues}
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+{/* JUDGE RESULT ⭐ */}
+
+
+
+<div className="response-card">
+
+
+<h2>
+⚖️ Final Judge Decision
+</h2>
+
+
+
+<h3>
+
+Decision:
+
+<span>
+{result.judge_decision}
+</span>
+
+</h3>
+
+
+
+<p>
+
+<strong>
+Explanation:
+</strong>
+
+<br/>
+
+{result.explanation}
+
+</p>
+
+
+
+
+<p>
+
+<strong>
+Recommendation:
+</strong>
+
+<br/>
+
+{result.recommendation}
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+{/* CHART */}
+
+
+
+<div className="chart-card">
+
+
+<h2>
+Agent Performance
+</h2>
+
+
+
+<ResponsiveContainer width="100%" height={350}>
+
+
+<BarChart data={chartData}>
+
+
+<CartesianGrid strokeDasharray="3 3"/>
+
+
+<XAxis dataKey="agent"/>
+
+
+<YAxis domain={[0,100]}/>
+
+
+<Tooltip/>
+
+
+
+<Bar
+
+dataKey="score"
+
+radius={[8,8,0,0]}
+
+>
+
+
+{
+chartData.map(
+(entry,index)=>(
+
+<Cell
+
+key={index}
+
+fill={colors[index]}
+
+/>
+
+)
+
+)
+}
+
+
+</Bar>
+
+
+
+</BarChart>
+
+
+</ResponsiveContainer>
+
+
+
+</div>
+
+
+
+</>
+
+)}
+
+
+
+</div>
+
+);
+
+}
+
+
 export default Dashboard;
-
-
-
-
 
 
 

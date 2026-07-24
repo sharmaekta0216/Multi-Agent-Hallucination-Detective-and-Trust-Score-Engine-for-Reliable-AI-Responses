@@ -229,25 +229,107 @@
 #                 continue
 
 #             raise Exception(error)
+# import os
+# import time
+# from google import genai
+# from dotenv import load_dotenv
+
+# load_dotenv()
+
+# api_key = os.getenv("GEMINI_API_KEY")
+# print("Loaded API Key:", api_key[:10] + "...")
+# if not api_key:
+#     raise Exception("GEMINI_API_KEY not found")
+
+# client = genai.Client(api_key=api_key)
+
+# MODEL_NAME = "gemini-3.6-flash"   # or another valid model
+
+# def get_gemini_response(prompt, retries=3):
+#     for attempt in range(retries):
+#         try:
+#             response = client.models.generate_content(
+#                 model=MODEL_NAME,
+#                 contents=prompt
+#             )
+
+#             if response and response.text:
+#                 return response.text.strip()
+
+#             raise Exception("Empty response")
+
+#         except Exception as e:
+#             error = str(e)
+
+#             if ("429" in error or "503" in error) and attempt < retries - 1:
+#                 time.sleep(5)
+#                 continue
+
+#             raise
+# import time
+# from google import genai
+# from config import GEMINI_API_KEY
+
+
+# client = genai.Client(api_key=GEMINI_API_KEY)
+
+# MODEL_NAME = "gemini-3.5-flash"
+
+
+# def get_gemini_response(prompt):
+
+#     retries = 3
+
+#     for attempt in range(retries):
+
+#         try:
+#             print(f"Gemini Attempt {attempt + 1}")
+
+#             response = client.models.generate_content(
+#                 model=MODEL_NAME,
+#                 contents=prompt
+#             )
+
+#             return response.text
+
+
+#         except Exception as e:
+#             print("Gemini Error:", e)
+
+#             if attempt < retries - 1:
+#                 time.sleep(5)
+
+#             else:
+#                 return "Unable to generate AI response due to API connection issue."
 import os
 import time
 from google import genai
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 api_key = os.getenv("GEMINI_API_KEY")
-print("Loaded API Key:", api_key[:10] + "...")
+
 if not api_key:
     raise Exception("GEMINI_API_KEY not found")
 
+print("Loaded API Key:", api_key[:10] + "...")
+
 client = genai.Client(api_key=api_key)
 
-MODEL_NAME = "gemini-flash-latest"   # or another valid model
+
+# Use stable model
+MODEL_NAME = "gemini-3.5-flash"
+
 
 def get_gemini_response(prompt, retries=3):
+
     for attempt in range(retries):
+
         try:
+            print(f"Gemini API Attempt {attempt + 1}/{retries}")
+
             response = client.models.generate_content(
                 model=MODEL_NAME,
                 contents=prompt
@@ -256,13 +338,45 @@ def get_gemini_response(prompt, retries=3):
             if response and response.text:
                 return response.text.strip()
 
-            raise Exception("Empty response")
+            raise Exception("Empty response received from Gemini")
+
 
         except Exception as e:
+
             error = str(e)
 
-            if ("429" in error or "503" in error) and attempt < retries - 1:
-                time.sleep(5)
-                continue
+            print("Gemini Error:", error)
 
-            raise
+
+            # Retry for temporary errors
+            retry_errors = [
+                "429",
+                "503",
+                "RESOURCE_EXHAUSTED",
+                "UNEXPECTED_EOF_WHILE_READING",
+                "Connection",
+                "timeout"
+            ]
+
+
+            if any(err in error for err in retry_errors):
+
+                if attempt < retries - 1:
+                    wait_time = 5 * (attempt + 1)
+
+                    print(
+                        f"Temporary Gemini error. Retrying after {wait_time} seconds..."
+                    )
+
+                    time.sleep(wait_time)
+                    continue
+
+
+            # Final failure response
+            return (
+                "Unable to generate AI response currently "
+                "due to Gemini API connection issue."
+            )
+
+
+    return "Unable to generate AI response."

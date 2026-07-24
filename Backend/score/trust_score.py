@@ -135,6 +135,95 @@
 #                 "hallucination_score": hallucination_score
 #             }
 #         }
+# class TrustAgent:
+
+#     def __init__(self):
+#         print("Trust Agent Initialized")
+
+
+#     def calculate_score(
+#         self,
+#         fact_score,
+#         logic_score,
+#         evidence_score,
+#         hallucination_score
+#     ):
+
+#         print("\n========== TRUST AGENT ==========")
+
+
+#         # Safe score conversion
+#         def normalize_score(value):
+#             try:
+#                 value = float(value)
+#             except:
+#                 value = 50
+
+#             return max(0, min(100, value))
+
+
+#         fact_score = normalize_score(fact_score)
+#         logic_score = normalize_score(logic_score)
+#         evidence_score = normalize_score(evidence_score)
+#         hallucination_score = normalize_score(hallucination_score)
+
+
+#         # Trust calculation
+#         trust_score = (
+#             (fact_score * 0.30) +
+#             (logic_score * 0.20) +
+#             (evidence_score * 0.30) +
+#             ((100 - hallucination_score) * 0.20)
+#         )
+
+
+#         trust_score = round(trust_score, 2)
+
+
+#         # Trust classification
+#         if trust_score >= 90:
+#             trust_level = "Very High"
+
+#         elif trust_score >= 80:
+#             trust_level = "High"
+
+#         elif trust_score >= 60:
+#             trust_level = "Medium"
+
+#         elif trust_score >= 40:
+#             trust_level = "Low"
+
+#         else:
+#             trust_level = "Very Low"
+
+
+
+#         print(f"Fact Score          : {fact_score}")
+#         print(f"Logic Score         : {logic_score}")
+#         print(f"Evidence Score      : {evidence_score}")
+#         print(f"Hallucination Score : {hallucination_score}")
+#         print(f"Final Trust Score   : {trust_score}")
+#         print(f"Trust Level         : {trust_level}")
+
+
+#         return {
+
+#             "trust_score": trust_score,
+
+#             "trust_level": trust_level,
+
+#             "details": {
+
+#                 "fact_score": fact_score,
+
+#                 "logic_score": logic_score,
+
+#                 "evidence_score": evidence_score,
+
+#                 "hallucination_score": hallucination_score
+
+#             }
+#         }
 class TrustAgent:
 
     def __init__(self):
@@ -146,13 +235,13 @@ class TrustAgent:
         fact_score,
         logic_score,
         evidence_score,
-        hallucination_score
+        hallucination_score,
+        adversarial_score
     ):
 
         print("\n========== TRUST AGENT ==========")
 
 
-        # Safe score conversion
         def normalize_score(value):
             try:
                 value = float(value)
@@ -166,21 +255,22 @@ class TrustAgent:
         logic_score = normalize_score(logic_score)
         evidence_score = normalize_score(evidence_score)
         hallucination_score = normalize_score(hallucination_score)
+        adversarial_score = normalize_score(adversarial_score)
 
 
-        # Trust calculation
+        # Improved Trust Formula
         trust_score = (
-            (fact_score * 0.30) +
+            (fact_score * 0.25) +
             (logic_score * 0.20) +
-            (evidence_score * 0.30) +
-            ((100 - hallucination_score) * 0.20)
+            (evidence_score * 0.20) +
+            ((100 - hallucination_score) * 0.20) +
+            (adversarial_score * 0.15)
         )
 
 
         trust_score = round(trust_score, 2)
 
 
-        # Trust classification
         if trust_score >= 90:
             trust_level = "Very High"
 
@@ -197,11 +287,11 @@ class TrustAgent:
             trust_level = "Very Low"
 
 
-
         print(f"Fact Score          : {fact_score}")
         print(f"Logic Score         : {logic_score}")
         print(f"Evidence Score      : {evidence_score}")
         print(f"Hallucination Score : {hallucination_score}")
+        print(f"Adversarial Score   : {adversarial_score}")
         print(f"Final Trust Score   : {trust_score}")
         print(f"Trust Level         : {trust_level}")
 
@@ -220,7 +310,10 @@ class TrustAgent:
 
                 "evidence_score": evidence_score,
 
-                "hallucination_score": hallucination_score
+                "hallucination_score": hallucination_score,
+
+                "adversarial_score": adversarial_score
 
             }
+
         }
