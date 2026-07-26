@@ -47,6 +47,7 @@ export default Login;*/
 import "../Styles/Login.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 function Login() {
 
@@ -54,6 +55,7 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -108,15 +110,26 @@ function Login() {
         </div>
 
         <div className="input-group">
-          <label>Password</label>
+  <label>Password</label>
 
-          <input
-            type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+  <div className="password-field">
+
+    <input
+      type={showPassword ? "text" : "password"}
+      placeholder="Enter your password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+    />
+
+    <span
+      className="eye-icon"
+      onClick={() => setShowPassword(!showPassword)}
+    >
+      {showPassword ? <FiEyeOff /> : <FiEye />}
+    </span>
+
+  </div>
+</div>
 
         <button
           className="login-btn"

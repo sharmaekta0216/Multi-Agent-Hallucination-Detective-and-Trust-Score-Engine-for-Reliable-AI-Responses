@@ -188,7 +188,6 @@ import Dashboard from "./components/Dashboard";
 import Team from "./components/Team";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import Charts from "./components/Charts";
 import About from "./components/About";
 import Settings from "./components/Settings";
 import Profile from "./components/Profile";
@@ -203,12 +202,11 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Signup />} />
+        <Route path="/" element={<Home />} />
         <Route
         path="/dashboard"
         element={user ? <Dashboard /> : <Navigate to="/login" />}
         />
-        <Route path="/charts" element={<Charts />} />
         <Route path="/team" element={<Team />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />

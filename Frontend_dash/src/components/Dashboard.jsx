@@ -972,13 +972,27 @@ Trust Score Engine for Reliable AI Responses
 
 
 <textarea
+  placeholder="Ask anything..."
+  value={question}
+  rows={1}
+  onChange={(e) => {
+  setQuestion(e.target.value);
 
-placeholder="Ask any question..."
+  e.target.style.height = "auto";
+  e.target.style.height = e.target.scrollHeight + "px";
 
-value={question}
-
-onChange={(e)=>setQuestion(e.target.value)}
-
+  if (e.target.scrollHeight >= 220) {
+    e.target.style.overflowY = "auto";
+  } else {
+    e.target.style.overflowY = "hidden";
+  }
+}}
+  onKeyDown={(e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      analyzeResponse();
+    }
+  }}
 />
 
 

@@ -135,10 +135,6 @@ function Navbar() {
         </li>
 
         <li>
-          <NavLink to="/charts">Charts</NavLink>
-        </li>
-
-        <li>
           <NavLink to="/team">Team</NavLink>
         </li>
 

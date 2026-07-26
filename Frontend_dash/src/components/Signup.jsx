@@ -62,6 +62,7 @@
 import "../styles/Signup.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 function Signup() {
   const navigate = useNavigate();
@@ -69,6 +70,7 @@ function Signup() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignup = async () => {
     try {
@@ -130,14 +132,26 @@ function Signup() {
         </div>
 
         <div className="input-group">
-          <label>Password</label>
-          <input
-            type="password"
-            placeholder="Create a password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+  <label>Password</label>
+
+  <div className="password-field">
+
+    <input
+      type={showPassword ? "text" : "password"}
+      placeholder="Create a password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+    />
+
+    <span
+      className="eye-icon"
+      onClick={() => setShowPassword(!showPassword)}
+    >
+      {showPassword ? <FiEyeOff /> : <FiEye />}
+    </span>
+
+  </div>
+</div>
 
         <button
           className="signup-submit"

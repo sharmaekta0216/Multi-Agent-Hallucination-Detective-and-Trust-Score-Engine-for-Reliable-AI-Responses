@@ -201,3 +201,28 @@
     color:white;
 
 }
+
+.password-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-field input {
+    width: 100%;
+    padding-right: 45px;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+    color: #666;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.eye-icon:hover {
+    color: #0077ff;
+}
