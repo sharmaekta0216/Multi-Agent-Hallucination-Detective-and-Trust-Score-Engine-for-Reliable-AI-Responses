@@ -1505,10 +1505,10 @@ from agents.workflow import run_workflow
 
 
 # =========================================================
-# 3. IMPORT GEMINI SERVICE
+# 3. IMPORT OPENAI SERVICE
 # =========================================================
 
-from services.gemini_service import get_gemini_response
+from services.groq_service import get_groq_response
 
 
 # =========================================================
@@ -1627,7 +1627,7 @@ Do not provide any explanation.
 """
 
 
-    evaluation_response = get_gemini_response(
+    evaluation_response = get_groq_response(
         prompt
     )
 
@@ -1662,7 +1662,7 @@ USER_ID = 1
 # ONLY FIRST 25 QUESTIONS WILL BE EVALUATED
 # ---------------------------------------------------------
 
-questions_to_evaluate = questions[:25]
+questions_to_evaluate = questions[51:70]
 
 
 print("\n")

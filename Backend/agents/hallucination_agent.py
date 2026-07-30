@@ -249,7 +249,7 @@
 #             }
 import json
 import re
-from services.gemini_service import get_gemini_response
+from services.groq_service import get_groq_response
 
 
 class HallucinationAgent:
@@ -303,9 +303,9 @@ Rules:
 
         try:
 
-            result = get_gemini_response(prompt)
+            result = get_groq_response(prompt)
 
-            print("\nRaw Gemini Response:")
+            print("\nRaw GROQ Response:")
             print(result)
 
             if not result:

@@ -143,7 +143,7 @@
 #                 "evidence_score": 50,
 #                 "message": "Unable to parse Gemini response."
 #             }
-import json
+# import json
 # import re
 # from services.gemini_service import get_gemini_response
 
@@ -233,7 +233,7 @@ import json
 #             }
 import json
 import re
-from services.gemini_service import get_gemini_response
+from services.groq_service import get_groq_response
 
 
 class EvidenceAgent:
@@ -287,13 +287,13 @@ Rules:
 
         try:
 
-            result = get_gemini_response(prompt)
+            result = get_groq_response(prompt)
 
-            print("\nRaw Gemini Response:")
+            print("\nRaw GROQ Response:")
             print(result)
 
             if not result:
-                raise ValueError("Empty response from Gemini.")
+                raise ValueError("Empty response from GROQ.")
 
             # Remove markdown
             cleaned = result.replace("```json", "")

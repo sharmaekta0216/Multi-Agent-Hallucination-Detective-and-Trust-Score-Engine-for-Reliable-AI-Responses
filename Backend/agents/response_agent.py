@@ -348,7 +348,7 @@
 #                 "response": "Unable to generate response.",
 #                 "error": str(e)
 #             }
-from services.gemini_service import get_gemini_response
+from services.groq_service import get_groq_response
 
 
 class ResponseAgent:
@@ -387,7 +387,7 @@ Question:
             print("\n========== RESPONSE AGENT ==========")
             print(prompt)
 
-            answer = get_gemini_response(prompt)
+            answer = get_groq_response(prompt)
 
             return {
                 "query": query,

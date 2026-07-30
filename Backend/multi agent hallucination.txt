@@ -1,0 +1,5 @@
+GEMINI_API_KEY="AQ.Ab8RN6IWA3LDUxmtBKue0ESy7Fd99i4jdkz_mTt7H_Ql4BC4wQ"
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=sarthak@0216
+DB_NAME=trust_score_db

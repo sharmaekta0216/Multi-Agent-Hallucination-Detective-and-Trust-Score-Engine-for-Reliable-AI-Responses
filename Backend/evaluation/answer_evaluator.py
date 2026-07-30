@@ -1,4 +1,4 @@
-from services.gemini_service import get_gemini_response
+from services.groq_service import get_groq_response
 
 
 def check_answer(correct_answer, ai_response):
@@ -23,7 +23,7 @@ An answer should be CORRECT if it gives the same factual meaning,
 even if the wording is different.
 """
 
-    result = get_gemini_response(prompt)
+    result = get_groq_response(prompt)
 
     result = result.strip().upper()
 

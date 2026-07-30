@@ -53,7 +53,7 @@
 #                 "summary": str(e)
 #             }
 import json
-from services.gemini_service import get_gemini_response
+from services.groq_service import get_groq_response
 from utils.json_parser import parse_json
 
 
@@ -114,7 +114,7 @@ Do not explain outside JSON.
 
         try:
 
-            result = get_gemini_response(prompt)
+            result = get_groq_response(prompt)
 
             data = parse_json(result)
 

@@ -739,7 +739,7 @@ def run_workflow(user_id, query):
 
         response_text=ai_response,
 
-        model_name="Gemini 3.5 Flash",
+        model_name="gpt-5.5",
 
         response_time_ms=None
 

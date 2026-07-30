@@ -224,6 +224,9 @@
 
 #             }
 #         }
+
+
+
 class TrustAgent:
 
     def __init__(self):
@@ -272,20 +275,18 @@ class TrustAgent:
 
 
         if trust_score >= 90:
-            trust_level = "Very High"
+             trust_level = "Very High"
 
         elif trust_score >= 80:
             trust_level = "High"
 
         elif trust_score >= 60:
-            trust_level = "Medium"
-
+           trust_level = "Medium"
         elif trust_score >= 40:
-            trust_level = "Low"
+           trust_level = "Low"
 
         else:
-            trust_level = "Very Low"
-
+          trust_level = "Very Low"
 
         print(f"Fact Score          : {fact_score}")
         print(f"Logic Score         : {logic_score}")
