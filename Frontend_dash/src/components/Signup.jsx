@@ -59,7 +59,7 @@
 // }
 
 // export default Signup;
-import "../styles/Signup.css";
+import "../Styles/Signup.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
