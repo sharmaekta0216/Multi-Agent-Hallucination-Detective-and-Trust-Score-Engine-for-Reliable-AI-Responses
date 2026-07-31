@@ -82,8 +82,9 @@ def login(request: LoginRequest):
         )
 
     return {
-        "success": True,
-        "message": "Login successful.",
-        "user_id": user["user_id"],
-        "name": user["full_name"]
-    }
+    "success": True,
+    "message": "Login successful.",
+    "user_id": user["user_id"],
+    "name": user["full_name"],
+    "email": user["email"]
+}
