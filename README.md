@@ -19,7 +19,7 @@ An AI-powered system that analyzes user queries using multiple agents to detect 
 
 ## 🏗️ Project Structure
 
-backend/ ├── main.py ├── agents/ ├── score/ ├── gemini_service.py └── requirements.txt
+backend/ ├── main.py ├── agents/ ├── score/ ├── groq_service.py └── requirements.txt
 frontend/ ├── src/ ├── public/ ├── package.json └── vite.config.js
 ---
 
