@@ -189,7 +189,7 @@ import Team from "./components/Team";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import About from "./components/About";
-import Settings from "./components/Settings";
+import Settings from "./components/settings";
 import Profile from "./components/Profile";
 import History from "./components/History";
 
