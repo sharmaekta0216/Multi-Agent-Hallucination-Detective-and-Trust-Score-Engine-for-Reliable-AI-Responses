@@ -74,7 +74,8 @@ function Login() {
 
       if (response.ok) {
     localStorage.setItem("user_id", data.user_id);
-    localStorage.setItem("name", data.name);
+localStorage.setItem("name", data.name);
+localStorage.setItem("email", data.email);
 
     alert("Login Successful!");
     window.location.href = "/dashboard";
