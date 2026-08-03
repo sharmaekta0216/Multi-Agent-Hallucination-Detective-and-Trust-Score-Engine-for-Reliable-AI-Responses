@@ -81,103 +81,94 @@
 // }
 
 // export default Navbar;
+// 
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import "../Styles/Navbar.css";
 import { FiSettings } from "react-icons/fi";
 import SettingsDropdown from "./SettingsDropdown";
 
-
 function Navbar() {
-
   const [showSettings, setShowSettings] = useState(false);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-
-  function handleClickOutside(event) {
-
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target)
-    ) {
-      setShowSettings(false);
+    function handleClickOutside(event) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setShowSettings(false);
+      }
     }
 
-  }
+    document.addEventListener("mousedown", handleClickOutside);
 
-  document.addEventListener("mousedown", handleClickOutside);
-
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
-  };
-
-}, []);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
-    <nav className="navbar">
+      <nav className="navbar">
+        {/* Logo */}
+        <div className="logo">
+          🤖 Trust Score Engine
+        </div>
 
-      {/* Logo */}
-      <div className="logo">
-        🤖 Trust Score Engine
-      </div>
+        {/* Navigation Links */}
+        <ul className="nav-links">
 
-      {/* Links */}
-      <ul className="nav-links">
+          <li>
+            <NavLink to="/">Home</NavLink>
+          </li>
 
-        <li>
-          <NavLink to="/">Home</NavLink>
-        </li>
+          <li>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+          </li>
 
-        <li>
-          <NavLink to="/dashboard">Dashboard</NavLink>
-        </li>
+          <li>
+            <NavLink to="/history">History</NavLink>
+          </li>
 
-        <li>
-          <NavLink to="/team">Team</NavLink>
-        </li>
+          <li>
+            <NavLink to="/team">Team</NavLink>
+          </li>
 
-        <li>
-          <NavLink to="/about">About</NavLink>
-        </li>
+          <li>
+            <NavLink to="/about">About</NavLink>
+          </li>
 
-        <li>
-          <NavLink to="/login">Login</NavLink>
-        </li>
+          <li>
+            <NavLink to="/login">Login</NavLink>
+          </li>
 
-        <li>
-          <NavLink to="/signup">Sign Up</NavLink>
-        </li>
+          <li>
+            <NavLink to="/signup">Sign Up</NavLink>
+          </li>
 
-       <li className="settings-wrapper">
+          <li className="settings-wrapper">
+            <button
+              className="settings-btn"
+              onClick={() => setShowSettings(!showSettings)}
+            >
+              <FiSettings size={22} />
+            </button>
+          </li>
 
-    <button
-        className="settings-btn"
-        onClick={() => setShowSettings(!showSettings)}
-    >
-        <FiSettings size={22} />
-    </button>
+        </ul>
+      </nav>
 
-</li>
-
-      </ul>
-
-</nav>
-
-{showSettings && (
-
-  <div ref={dropdownRef}>
-
-    <SettingsDropdown
-      onClose={() => setShowSettings(false)}
-    />
-
-  </div>
-
-)}
-</>
-);
+      {showSettings && (
+        <div ref={dropdownRef}>
+          <SettingsDropdown
+            onClose={() => setShowSettings(false)}
+          />
+        </div>
+      )}
+    </>
+  );
 }
 
 export default Navbar;

@@ -34,8 +34,8 @@ function History() {
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
-    const userId = localStorage.getItem("user_id");
-
+    // const userId = localStorage.getItem("user_id");
+const userId = 1;
     fetch(`http://127.0.0.1:8000/history/${userId}`)
       .then((res) => res.json())
       .then((data) => {
