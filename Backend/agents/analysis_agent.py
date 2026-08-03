@@ -1,5 +1,5 @@
 import json
-from services.groq_service import get_groq_response
+from services.gemini_service import get_gemini_response
 from utils.json_parser import parse_json
 
 
@@ -77,7 +77,7 @@ Do not write explanations outside JSON.
 
         try:
 
-            result = get_groq_response(prompt)
+            result = get_gemini_response(prompt)
 
             data = parse_json(result)
 

@@ -301,8 +301,8 @@
 
 #             else:
 #                 return "Unable to generate AI response due to API connection issue."
-import os
-import time
+# import os
+# import time
 
 # from dotenv import load_dotenv
 # from groq import (
@@ -361,48 +361,95 @@ import time
 #             return "Unable to generate an AI response currently."
 
 #     return "Unable to generate an AI response."
+# import os
+# import time
+# from dotenv import load_dotenv
+# from groq import (
+#     Groq,
+#     APIConnectionError,
+#     APIStatusError,
+#     RateLimitError,
+# )
+
+# load_dotenv()
+
+# api_key = os.getenv("GROQ_API_KEY")
+
+# if not api_key:
+#     raise Exception("GROQ_API_KEY not found")
+
+# client = Groq(api_key=api_key)
+
+# MODEL_NAME = "qwen/qwen3.6-27b"  # or another available model
+
+
+# def get_groq_response(prompt, retries=3):
+#     for attempt in range(retries):
+#         try:
+#             print(f"Groq API attempt {attempt + 1}/{retries}")
+#             print(f"Using model: {MODEL_NAME}")
+
+#             response = client.chat.completions.create(
+#                 model=MODEL_NAME,
+#                 messages=[
+#                     {
+#                         "role": "user",
+#                         "content": prompt,
+#                     }
+#                 ],
+#                 temperature=0.2,
+#             )
+
+#             return response.choices[0].message.content.strip()
+
+#         except (RateLimitError, APIConnectionError, APIStatusError) as error:
+#             print("Groq error:", error)
+
+#             if attempt < retries - 1:
+#                 wait_time = 5 * (attempt + 1)
+#                 print(f"Retrying after {wait_time} seconds...")
+#                 time.sleep(wait_time)
+#                 continue
+
+#             return "Unable to generate an AI response due to a Groq API issue."
+
+#         except Exception as error:
+#             print("Groq error:", error)
+#             return "Unable to generate an AI response currently."
+
+#     return "Unable to generate an AI response."
 import os
 import time
 from dotenv import load_dotenv
-from groq import (
-    Groq,
-    APIConnectionError,
-    APIStatusError,
-    RateLimitError,
-)
+from google import genai
 
 load_dotenv()
 
-api_key = os.getenv("GROQ_API_KEY")
+api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
-    raise Exception("GROQ_API_KEY not found")
+    raise Exception("GEMINI_API_KEY not found")
 
-client = Groq(api_key=api_key)
+client = genai.Client(api_key=api_key)
 
-MODEL_NAME = "llama-3.3-70b-versatile"
+MODEL_NAME = "gemini-3.6-flash"
 
 
-def get_groq_response(prompt, retries=3):
+def get_gemini_response(prompt, retries=3):
     for attempt in range(retries):
         try:
-            print(f"Groq API attempt {attempt + 1}/{retries}")
+            print(f"Gemini API attempt {attempt + 1}/{retries}")
+            print(f"Using model: {MODEL_NAME}")
 
-            response = client.chat.completions.create(
+            response = client.models.generate_content(
                 model=MODEL_NAME,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt,
-                    }
-                ],
-                temperature=0.2,
+                contents=prompt,
             )
 
-            return response.choices[0].message.content.strip()
+            return response.text.strip()
 
-        except (RateLimitError, APIConnectionError, APIStatusError) as error:
-            print("Groq error:", error)
+        except Exception as error:
+            print("Gemini error:", error)
 
             if attempt < retries - 1:
                 wait_time = 5 * (attempt + 1)
@@ -410,10 +457,6 @@ def get_groq_response(prompt, retries=3):
                 time.sleep(wait_time)
                 continue
 
-            return "Unable to generate an AI response due to a Groq API issue."
-
-        except Exception as error:
-            print("Groq error:", error)
-            return "Unable to generate an AI response currently."
+            return "Unable to generate an AI response due to a Gemini API issue."
 
     return "Unable to generate an AI response."

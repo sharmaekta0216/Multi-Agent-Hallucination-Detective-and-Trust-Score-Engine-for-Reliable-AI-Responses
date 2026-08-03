@@ -348,7 +348,72 @@
 #                 "response": "Unable to generate response.",
 #                 "error": str(e)
 #             }
-from services.groq_service import get_groq_response
+# from services.groq_service import get_groq_response
+
+
+# class ResponseAgent:
+
+#     def __init__(self):
+#         print("Response Agent Initialized")
+
+#     def generate_response(self, query):
+
+#         prompt = f"""
+# "You are an expert AI assistant specializing in factual accuracy, logical reasoning, and trustworthy responses.
+
+# Answer the user's question naturally.
+
+# Requirements:
+
+# - Give the direct answer first.
+# - If the question contains a false assumption or misleading statement, clearly identify and correct it before answering.
+# - Write in plain English.
+# - Do NOT use Markdown.
+# - Do NOT use #, ##, ### headings.
+# - Do NOT use **, *, or --- symbols.
+# - Use short paragraphs.
+# - Use numbered lists only if they improve readability.
+# - Explain important facts briefly.
+# - Provide 2 to 4 additional relevant facts whenever they help the user understand the topic better.
+# - If the question is about a city, state, country, person, organization, or historical event, include relevant context such as:
+#   • Administrative hierarchy
+#   • Current office holders (when relevant)
+#   • Geographic location
+#   • Historical significance
+#   • Important landmarks or achievements
+# - Never fabricate facts, names, dates, or statistics.
+# - If you are uncertain about any information, clearly state that instead of guessing.
+# - Keep the answer professional, user-friendly, and easy to understand.
+# - Do NOT return JSON.
+# - Do NOT include code unless requested.
+# - Return only the final answer.
+
+# Question:
+# {query}
+
+#         try:
+
+#             print("\n========== RESPONSE AGENT ==========")
+#             print(prompt)
+
+#             answer = get_groq_response(prompt)
+
+#             return {
+#                 "query": query,
+#                 "response": answer
+#             }
+
+#         except Exception as e:
+
+#             print("\n========== RESPONSE AGENT ERROR ==========")
+#             print(str(e))
+
+#             return {
+#                 "query": query,
+#                 "response": "Unable to generate response.",
+#                 "error": str(e)
+#             }
+from services.gemini_service import get_gemini_response
 
 
 class ResponseAgent:
@@ -359,13 +424,14 @@ class ResponseAgent:
     def generate_response(self, query):
 
         prompt = f"""
-You are an expert AI assistant.
+You are an expert AI assistant specializing in factual accuracy, logical reasoning, and trustworthy responses.
 
 Answer the user's question naturally.
 
 Requirements:
 
 - Give the direct answer first.
+- If the question contains a false assumption or misleading statement, clearly identify and correct it before answering.
 - Write in plain English.
 - Do NOT use Markdown.
 - Do NOT use #, ##, ### headings.
@@ -373,6 +439,17 @@ Requirements:
 - Use short paragraphs.
 - Use numbered lists only if they improve readability.
 - Explain important facts briefly.
+- Provide 2 to 4 additional relevant facts whenever they help the user understand the topic better.
+- If the question is about a city, state, country, person, organization, or historical event, include relevant context such as:
+  - Administrative hierarchy
+  - Current office holders (when relevant)
+  - Geographic location
+  - Historical significance
+  - Important landmarks or achievements
+- If the question contains incorrect information, politely correct it before answering.
+- Include relevant current facts whenever appropriate.
+- Never fabricate facts, names, dates, statistics, or references.
+- If you are uncertain about any information, clearly state that instead of guessing.
 - Keep the answer professional, user-friendly, and easy to understand.
 - Do NOT return JSON.
 - Do NOT include code unless requested.
@@ -387,7 +464,7 @@ Question:
             print("\n========== RESPONSE AGENT ==========")
             print(prompt)
 
-            answer = get_groq_response(prompt)
+            answer = get_gemini_response(prompt)
 
             return {
                 "query": query,

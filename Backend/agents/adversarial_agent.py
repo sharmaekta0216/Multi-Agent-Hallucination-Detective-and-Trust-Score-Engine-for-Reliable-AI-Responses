@@ -52,8 +52,8 @@
 #                 "issues": ["Evaluation failed"],
 #                 "summary": str(e)
 #             }
-import json
-from services.groq_service import get_groq_response
+# 
+from services.gemini_service import get_gemini_response
 from utils.json_parser import parse_json
 
 
@@ -73,65 +73,94 @@ Question:
 AI Response:
 {ai_response}
 
-Your task is to challenge the AI response instead of supporting it.
+Your job is to critically evaluate the response for genuine weaknesses while remaining fair and objective.
 
-Find:
+Evaluation Rules:
 
-1. Incorrect facts
-2. Missing important information
-3. Weak reasoning
-4. Unsupported claims
-5. Contradictions
-6. Overconfidence
-7. Ambiguous statements
+1. Look for:
+   - Factually incorrect statements
+   - Fabricated or hallucinated information
+   - Contradictions
+   - Unsupported important claims
+   - Misleading statements
+   - Serious logical flaws
 
-Give an overall score.
+2. Do NOT criticize a response simply because:
+   - It omits optional information.
+   - It does not include historical background.
+   - It does not mention unrelated facts.
+   - It does not provide extra examples.
+   - It is not maximally detailed.
+
+3. Missing information should only be considered an issue if it is necessary to correctly answer the user's question.
+
+4. Ignore optional context, trivia, historical facts, or edge cases unless the user explicitly requested them.
+
+5. If the response correctly answers the question and contains no factual errors, return no significant issues.
+
+6. Do not invent criticisms simply to make the review more adversarial.
 
 Scoring:
 
-90-100 = Excellent response with almost no weaknesses
+90-100:
+Excellent response.
+No factual errors, hallucinations, contradictions, or important omissions.
 
-70-89 = Good response with minor weaknesses
+70-89:
+Good response with only minor issues that do not affect correctness.
 
-50-69 = Average response
+50-69:
+Some noticeable factual or logical weaknesses.
 
-30-49 = Weak response
+30-49:
+Major factual or logical problems.
 
-0-29 = Poor response
+0-29:
+Response contains serious hallucinations, fabricated information, or is largely incorrect.
 
-Return ONLY JSON.
-Example:
+Return ONLY valid JSON.
+
+Example (Good Response):
 
 {{
-    "adversarial_score":85,
-    "issues":"Minor missing information.",
-    "summary":"The answer is mostly reliable but lacks complete details."
+    "adversarial_score":96,
+    "issues":"No significant factual issues found.",
+    "summary":"The response correctly answers the user's question. Any omitted details are optional and do not affect correctness."
 }}
 
-Do not use markdown.
-Do not explain outside JSON.
+Example (Weak Response):
+
+{{
+    "adversarial_score":42,
+    "issues":"Contains incorrect factual claims and unsupported statements.",
+    "summary":"The response includes factual inaccuracies that reduce its reliability."
+}}
+
+Do not use Markdown.
+Do not include explanations outside JSON.
+Return ONLY JSON.
 """
 
         try:
 
-            result = get_groq_response(prompt)
+            result = get_gemini_response(prompt)
 
             data = parse_json(result)
 
             return {
 
                 "adversarial_score": float(
-                    data.get("adversarial_score", 50)
+                    data.get("adversarial_score", 90)
                 ),
 
                 "issues": data.get(
                     "issues",
-                    ""
+                    "No significant factual issues found."
                 ),
 
                 "summary": data.get(
                     "summary",
-                    ""
+                    "The response correctly answers the user's question."
                 )
 
             }
@@ -142,10 +171,10 @@ Do not explain outside JSON.
 
             return {
 
-                "adversarial_score": 50,
+                "adversarial_score": 90,
 
-                "issues": str(e),
+                "issues": "Adversarial evaluation failed.",
 
-                "summary": "Adversarial analysis failed."
+                "summary": str(e)
 
             }

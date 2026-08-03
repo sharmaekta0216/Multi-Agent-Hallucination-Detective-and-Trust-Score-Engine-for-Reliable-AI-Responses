@@ -25,7 +25,7 @@
 // export default CircularScore;
 import React from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/Styles.css";
+import "react-circular-progressbar/dist/styles.css";
 
 function CircularScore({ title, value }) {
   return (

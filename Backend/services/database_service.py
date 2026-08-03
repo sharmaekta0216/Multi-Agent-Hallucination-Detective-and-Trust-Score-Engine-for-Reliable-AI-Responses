@@ -102,7 +102,7 @@ def save_query(user_id, query_text):
 # -----------------------------
 
 def save_response(query_id, response_text,
-                  model_name="Gemini 2.5 Flash",
+                  model_name="gemini-3.6-flash",
                   response_time_ms=None):
 
     conn = get_connection()
