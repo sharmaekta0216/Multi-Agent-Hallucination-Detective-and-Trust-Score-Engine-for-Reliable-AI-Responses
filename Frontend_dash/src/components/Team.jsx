@@ -100,8 +100,8 @@ function Team() {
   const members = [
     {
       name: "Ekta Sharma",
-      role: "Team Leader",
-      work: "Project Planning, Multi-Agent Architecture, Backend Integration"
+      role: "Team Leader & Backend Developer",
+      work: "Project Planning, Backend Development, Multi-Agent Architecture, FastAPI Integration"
     },
     {
       name: "Falak Kumawat",
@@ -109,16 +109,14 @@ function Team() {
       work: "React UI, Responsive Design, Dashboard Development"
     },
     {
-      
-    
       name: "Goon Bansal",
       role: "Database Developer",
       work: "MySQL Database, Query Optimization, Data Management"
     },
     {
       name: "Kavita Bhati",
-      role: "Backend Developer",
-      work: "FastAPI APIs, Agent Integration, Validation"
+      role: "Documentation",
+      work: "Project Documentation, Report Preparation, Presentation, Testing & Documentation Support"
     },
   ];
 
@@ -137,12 +135,12 @@ function Team() {
         {members.map((member, index) => (
           <div className="team-card" key={index}>
 
-           <div className="avatar">
-  {member.name
-    .split(" ")
-    .map(word => word[0])
-    .join("")}
-</div>
+            <div className="avatar">
+              {member.name
+                .split(" ")
+                .map(word => word[0])
+                .join("")}
+            </div>
 
             <h2>{member.name}</h2>
 

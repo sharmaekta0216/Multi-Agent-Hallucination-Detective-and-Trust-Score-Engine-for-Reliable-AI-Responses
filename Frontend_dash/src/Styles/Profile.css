@@ -86,18 +86,72 @@
 
     font-size:17px;
 
+    margin-bottom:25px;
+
 }
 
 .profile-card h1{
-    color:#2563eb;
+
+    color:#2563EB;
+
     margin-bottom:25px;
+
 }
 
 .profile-card p{
+
     margin:15px 0;
+
 }
 
 .profile-note{
-    color:#666;
+
+    color:#94A3B8;
+
     margin-top:30px;
+
+}
+
+/* Login Button */
+
+.profile-login-btn{
+
+    margin-top:20px;
+
+    padding:12px 30px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:linear-gradient(
+        135deg,
+        #2563EB,
+        #3B82F6
+    );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s ease;
+
+}
+
+.profile-login-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:linear-gradient(
+        135deg,
+        #1D4ED8,
+        #2563EB
+    );
+
+    box-shadow:0 8px 20px rgba(37,99,235,.35);
+
 }

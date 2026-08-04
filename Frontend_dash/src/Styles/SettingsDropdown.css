@@ -24,13 +24,19 @@
 
 .dropdown-item{
 
-    display:block;
+    display:flex;
 
-    padding:15px 18px;
+    align-items:center;
 
-    color:#F8FAFC;
+    gap:10px;
+
+    padding:12px 18px;
+
+    color:white;
 
     text-decoration:none;
+
+    border-radius:10px;
 
     transition:.3s;
 
@@ -38,13 +44,49 @@
 
 .dropdown-item:hover{
 
-    background:#2563EB;
+    background:#334155;
 
 }
 
 .logout{
 
+    width:100%;
+
+    background:none;
+
+    border:none;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    font-size:15px;
+
     color:#EF4444;
+
+    padding:12px 18px;
+
+    border-radius:10px;
+
+    transition:.3s;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-family:inherit;
+
+}
+
+.logout:hover{
+
+    background:rgba(239,68,68,.15);
+
+    color:#FF6B6B;
+
+    transform:translateX(4px);
 
 }
 

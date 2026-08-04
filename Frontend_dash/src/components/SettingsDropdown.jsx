@@ -1,8 +1,29 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../Styles/SettingsDropdown.css";
 
 function SettingsDropdown({ onClose }) {
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+
+    // Clear logged-in user
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("name");
+    localStorage.removeItem("email");
+
+    // Close dropdown
+    onClose();
+
+    // Redirect to Home
+    navigate("/");
+
+    // Refresh components
+    window.location.reload();
+  };
+
   return (
+
     <div className="settings-dropdown">
 
       <Link
@@ -23,15 +44,15 @@ function SettingsDropdown({ onClose }) {
 
       <div className="dropdown-divider"></div>
 
-      <Link
-        to="/"
+      <button
         className="dropdown-item logout"
-        onClick={onClose}
+        onClick={handleLogout}
       >
         🚪 Logout
-      </Link>
+      </button>
 
     </div>
+
   );
 }
 

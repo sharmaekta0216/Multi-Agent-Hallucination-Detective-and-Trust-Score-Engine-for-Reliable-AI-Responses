@@ -863,6 +863,7 @@ function Dashboard() {
 
     try {
 
+      const userId = localStorage.getItem("user_id");
       const response = await fetch(
         "http://127.0.0.1:8000/analyze",
         {
@@ -873,9 +874,9 @@ function Dashboard() {
           },
 
           body: JSON.stringify({
-            user_id:1,
-            question:question,
-          }),
+             user_id: Number(userId),
+             question: question,
+         }),
         }
       );
 

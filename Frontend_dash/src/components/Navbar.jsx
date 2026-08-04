@@ -129,10 +129,6 @@ function Navbar() {
           </li>
 
           <li>
-            <NavLink to="/history">History</NavLink>
-          </li>
-
-          <li>
             <NavLink to="/team">Team</NavLink>
           </li>
 
