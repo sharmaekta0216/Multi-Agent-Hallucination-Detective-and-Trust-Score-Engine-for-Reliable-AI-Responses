@@ -865,7 +865,7 @@ function Dashboard() {
 
       const userId = localStorage.getItem("user_id");
       const response = await fetch(
-        "http://127.0.0.1:8000/analyze",
+  "https://multi-agent-hallucination-detective-and.onrender.com/analyze",
         {
           method: "POST",
 

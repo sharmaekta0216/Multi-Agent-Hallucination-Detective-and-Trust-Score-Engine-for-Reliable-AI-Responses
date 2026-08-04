@@ -32,7 +32,7 @@ cd backend
 python -m venv venv
 venv\Scripts\activate   # Windows
 pip install -r requirements.txt
-http://127.0.0.1:8000
+"https://multi-agent-hallucination-detective-and.onrender.com
 uvicorn main:app --reload
 Install dependencies
 cd frontend

@@ -1,3 +1,144 @@
+// import "../Styles/Login.css";
+// import { useState } from "react";
+// import { Link } from "react-router-dom";
+// import { FiEye, FiEyeOff } from "react-icons/fi";
+
+
+// function Login() {
+
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [showPassword, setShowPassword] = useState(false);
+
+//   const handleLogin = async () => {
+
+//     if (!email.trim() || !password.trim()) {
+//     alert("Please enter your email and password.");
+//     return;
+//   }
+
+//     try {
+
+//       const response = await fetch(" "https://multi-agent-hallucination-detective-xxxx.onrender.com/login"{
+
+//         method: "POST",
+
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+
+//         body: JSON.stringify({
+
+//           email: email,
+//           password: password,
+
+//         }),
+
+//       });
+
+//       const data = await response.json();
+
+//       if (response.ok) {
+
+//         localStorage.setItem("user_id", data.user_id);
+//         localStorage.setItem("name", data.name);
+//         localStorage.setItem("email", data.email);
+
+//         alert("Login Successful!");
+
+//         window.location.href = "/dashboard";
+
+//       } else {
+
+//         alert(data.detail);
+
+//       }
+
+//     } catch (error) {
+
+//       console.error(error);
+
+//       alert("Backend connection failed.");
+
+//     }
+
+//   };
+
+//   return (
+
+//     <div className="login-page">
+
+//       <div className="login-card">
+
+//         <h1>Sign In</h1>
+
+//         <p className="login-subtitle">
+
+//           Welcome back! Log In to continue.
+
+//         </p>
+
+//         <div className="input-group">
+
+//           <label>Email Address</label>
+
+//           <input
+//             type="email"
+//             placeholder="Enter your email"
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//           />
+
+//         </div>
+
+//         <div className="input-group">
+
+//           <label>Password</label>
+
+//           <div className="password-field">
+
+//             <input
+//               type={showPassword ? "text" : "password"}
+//               placeholder="Enter your password"
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//             />
+
+//             <span
+//               className="eye-icon"
+//               onClick={() => setShowPassword(!showPassword)}
+//             >
+//               {showPassword ? <FiEyeOff /> : <FiEye />}
+//             </span>
+
+//           </div>
+
+//         </div>
+
+//         <button
+//           className="login-btn"
+//           onClick={handleLogin}
+//         >
+//           Login
+//         </button>
+
+//         <p className="signup-link">
+
+//           Don't have an account?
+
+//           <Link to="/signup"> Sign Up</Link>
+
+//         </p>
+
+//       </div>
+
+//     </div>
+
+//   );
+
+// }
+  
+// export default Login;
 import "../Styles/Login.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -10,33 +151,36 @@ function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+
   const handleLogin = async () => {
 
     if (!email.trim() || !password.trim()) {
-    alert("Please enter your email and password.");
-    return;
-  }
+      alert("Please enter your email and password.");
+      return;
+    }
+
 
     try {
 
-      const response = await fetch("http://127.0.0.1:8000/login", {
+      const response = await fetch(
+        "https://multi-agent-hallucination-detective-and.onrender.com/login",
+        {
+          method: "POST",
 
-        method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-        headers: {
-          "Content-Type": "application/json",
-        },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        }
+      );
 
-        body: JSON.stringify({
-
-          email: email,
-          password: password,
-
-        }),
-
-      });
 
       const data = await response.json();
+
 
       if (response.ok) {
 
@@ -44,25 +188,28 @@ function Login() {
         localStorage.setItem("name", data.name);
         localStorage.setItem("email", data.email);
 
+
         alert("Login Successful!");
 
         window.location.href = "/dashboard";
 
       } else {
 
-        alert(data.detail);
+        alert(data.detail || "Invalid email or password");
 
       }
 
+
     } catch (error) {
 
-      console.error(error);
+      console.error("Login Error:", error);
 
       alert("Backend connection failed.");
 
     }
 
   };
+
 
   return (
 
@@ -72,11 +219,12 @@ function Login() {
 
         <h1>Sign In</h1>
 
+
         <p className="login-subtitle">
-
           Welcome back! Log In to continue.
-
         </p>
+
+
 
         <div className="input-group">
 
@@ -86,34 +234,48 @@ function Login() {
             type="email"
             placeholder="Enter your email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e)=>setEmail(e.target.value)}
           />
 
         </div>
+
+
+
 
         <div className="input-group">
 
           <label>Password</label>
 
+
           <div className="password-field">
+
 
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e)=>setPassword(e.target.value)}
             />
+
+
 
             <span
               className="eye-icon"
               onClick={() => setShowPassword(!showPassword)}
             >
+
               {showPassword ? <FiEyeOff /> : <FiEye />}
+
             </span>
+
 
           </div>
 
+
         </div>
+
+
+
 
         <button
           className="login-btn"
@@ -122,13 +284,19 @@ function Login() {
           Login
         </button>
 
+
+
+
         <p className="signup-link">
 
           Don't have an account?
 
-          <Link to="/signup"> Sign Up</Link>
+          <Link to="/signup">
+            {" "}Sign Up
+          </Link>
 
         </p>
+
 
       </div>
 
@@ -137,5 +305,6 @@ function Login() {
   );
 
 }
-  
+
+
 export default Login;
