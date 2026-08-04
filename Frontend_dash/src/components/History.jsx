@@ -1,41 +1,19 @@
-// import "../Styles/History.css";
-
-// function History() {
-//   return (
-//     <div className="history-page">
-
-//       <div className="history-card">
-
-//         <h1>🕒 Recent Questions</h1>
-
-//         <p className="history-subtitle">
-//           Your previously asked questions will appear here.
-//         </p>
-
-//         <div className="history-box">
-
-//           <p className="empty-history">
-//             No recent questions found.
-//           </p>
-
-//         </div>
-
-//       </div>
-
-//     </div>
-//   );
-// }
-
-// export default History;
 import { useEffect, useState } from "react";
 import "../Styles/History.css";
 
 function History() {
+
   const [history, setHistory] = useState([]);
 
+  const userId = localStorage.getItem("user_id");
+
   useEffect(() => {
-    // const userId = localStorage.getItem("user_id");
-const userId = 1;
+
+    if (!userId) {
+      setHistory([]);
+      return;
+    }
+
     fetch(`http://127.0.0.1:8000/history/${userId}`)
       .then((res) => res.json())
       .then((data) => {
@@ -44,10 +22,12 @@ const userId = 1;
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+
+  }, [userId]);
 
   return (
     <div className="history-page">
+
       <div className="history-card">
 
         <h1>🕒 Recent Questions</h1>
@@ -58,13 +38,24 @@ const userId = 1;
 
         <div className="history-box">
 
-          {history.length === 0 ? (
+          {!userId ? (
+
+            <p className="empty-history">
+              Please login to view your history.
+            </p>
+
+          ) : history.length === 0 ? (
+
             <p className="empty-history">
               No recent questions found.
             </p>
+
           ) : (
+
             history.map((item, index) => (
+
               <div key={index} className="history-item">
+
                 <h3>{item.query_text}</h3>
 
                 <p>
@@ -80,13 +71,17 @@ const userId = 1;
                 </p>
 
                 <hr />
+
               </div>
+
             ))
+
           )}
 
         </div>
 
       </div>
+
     </div>
   );
 }

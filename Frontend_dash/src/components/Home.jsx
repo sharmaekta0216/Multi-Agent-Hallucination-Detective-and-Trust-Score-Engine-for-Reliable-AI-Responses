@@ -14,7 +14,7 @@ function Home() {
         </span>
 
         <h1>
-          Multi-Agent Hallucination Detector
+          Multi-Agent Hallucination Detective
         </h1>
 
         <h2>

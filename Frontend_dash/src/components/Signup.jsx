@@ -73,6 +73,12 @@ function Signup() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSignup = async () => {
+
+    if (!fullName.trim() || !email.trim() || !password.trim()) {
+    alert("Please fill all the fields.");
+    return;
+  }
+
     try {
       const response = await fetch("http://127.0.0.1:8000/signup", {
         method: "POST",

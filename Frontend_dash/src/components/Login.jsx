@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
+
 function Login() {
 
   const [email, setEmail] = useState("");
@@ -10,6 +11,11 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
+
+    if (!email.trim() || !password.trim()) {
+    alert("Please enter your email and password.");
+    return;
+  }
 
     try {
 
@@ -131,5 +137,5 @@ function Login() {
   );
 
 }
-
+  
 export default Login;
