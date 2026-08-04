@@ -276,6 +276,7 @@ def get_connection():
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
         database=os.getenv("DB_NAME"),
+         port=os.getenv("DB_PORT"),
         auth_plugin="caching_sha2_password",
         use_pure=True,
     )
