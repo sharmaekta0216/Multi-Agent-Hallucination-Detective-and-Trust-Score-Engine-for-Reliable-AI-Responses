@@ -478,6 +478,7 @@ app.add_middleware(
     CORSMiddleware,
 
     allow_origins=[
+        "https://multi-agent-hallucination-detective-and-yyub.onrender.com",
         "http://localhost:5173",
         "http://localhost:5174",
         "http://localhost:5175",
